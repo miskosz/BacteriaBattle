@@ -1,9 +1,9 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
 public class PlayerLocations : MonoBehaviour {
 
-	// Use this for fun
+	// Use this for initialization
 	void Start () {
 	
 	}
