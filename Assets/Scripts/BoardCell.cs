@@ -33,11 +33,8 @@ public class BoardCell : MonoBehaviour {
 	}
 
     void OnMouseDown() {
-        // switch the sprite
-		// state = (BoardCellState)(((int)state + 1) % 3);
-		// UpdateImage ();
-
-		boardBuilder.playerSelected (iPos, jPos);
+        // notify BoardBuilder
+		boardBuilder.playerSelected(iPos, jPos);
     }
 
 	void UpdateImage() {
@@ -64,5 +61,9 @@ public class BoardCell : MonoBehaviour {
 		state = _state;
 		UpdateImage ();
 	}
+
+	// helper function
+	public bool isEmpty() { return state == BoardCellState.Empty; }
+
 
 }
