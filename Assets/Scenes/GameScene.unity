@@ -103,6 +103,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boardCellPrefab: {fileID: 100000, guid: f0f06b6a9995949c28b3e8c2dc9e2ef8, type: 2}
   cellDistance: .889999986
+  blueCount: 0
+  orangeCount: 0
 --- !u!4 &31124283
 Transform:
   m_ObjectHideFlags: 0

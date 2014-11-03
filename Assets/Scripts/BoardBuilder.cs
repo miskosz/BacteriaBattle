@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -6,6 +6,9 @@ public class BoardBuilder : MonoBehaviour {
 
 	public GameObject boardCellPrefab;
 	public float cellDistance = 1;
+
+	public int blueCount = 0;
+	public int orangeCount = 0;
 
 	// initial board setup
 	// 0 - out of board
@@ -75,6 +78,7 @@ public class BoardBuilder : MonoBehaviour {
 		bool hasMove = false;
 
 		forEachBoardCell((int i, int j) => {
+				
 			bool highlight = false;
 			if (board[i,j].isEmpty()) {
 				// iterate over cell neighbours
@@ -85,8 +89,12 @@ public class BoardBuilder : MonoBehaviour {
 					}
 				});
 			}
-			board[i,j].setHighlighted(highlight);
+			board[i,j].setHighlighted(highlight); 
+
+
 		});
+
+		getScore();
 
 		// detect game end
 		if (!hasMove) {
@@ -246,5 +254,24 @@ public class BoardBuilder : MonoBehaviour {
 				method(ii, jj);
 			}
 		}
+	}
+
+	// score counting
+	public void getScore() {
+		int blueCountTemp = 0;
+		int orangeCountTemp = 0;
+		
+		forEachBoardCell((int i, int j) => {
+			
+			//Debug.Log(board[i,j].getState());
+			
+			if (board[i,j].getState() == BoardCellState.Blue) blueCountTemp++;
+			else if (board[i,j].getState() == BoardCellState.Orange) orangeCountTemp++;
+			
+			blueCount = blueCountTemp;
+			orangeCount = orangeCountTemp;
+			
+			Debug.Log("Blue:"+blueCount+" Orange:"+orangeCount);
+		});
 	}
 }
