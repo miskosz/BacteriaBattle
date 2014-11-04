@@ -7,8 +7,11 @@ public class BoardBuilder : MonoBehaviour {
 	public GameObject boardCellPrefab;
 	public float cellDistance = 1;
 
-	public int blueCount = 0;
-	public int orangeCount = 0;
+	int blueCount = 0;
+	int orangeCount = 0;
+
+	public int xxxx;
+	
 
 	// initial board setup
 	// 0 - out of board
@@ -267,11 +270,19 @@ public class BoardBuilder : MonoBehaviour {
 			
 			if (board[i,j].getState() == BoardCellState.Blue) blueCountTemp++;
 			else if (board[i,j].getState() == BoardCellState.Orange) orangeCountTemp++;
-			
-			blueCount = blueCountTemp;
-			orangeCount = orangeCountTemp;
-			
-			Debug.Log("Blue:"+blueCount+" Orange:"+orangeCount);
+
 		});
+
+		blueCount = blueCountTemp;
+		orangeCount = orangeCountTemp;
+
+		Debug.Log("Blue:"+blueCount+" Orange:"+orangeCount);
+	}
+
+	void OnGUI() {
+
+		GUI.Label(new Rect(20, Screen.height-30, 100, 20), "Blue: "+blueCount);
+		GUI.Label(new Rect(Screen.width-xxxx, 30, 100, 20), "Orange: "+orangeCount);
+
 	}
 }
