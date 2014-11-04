@@ -127,6 +127,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 913135654}
   - 212: {fileID: 913135653}
+  - 58: {fileID: 913135656}
+  - 114: {fileID: 913135655}
   m_Layer: 0
   m_Name: ExitBtn
   m_TagString: Untagged
@@ -168,6 +170,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
+--- !u!114 &913135655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 913135652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01d56021212e64d578bca182653421c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!58 &913135656
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 913135652}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Radius: .5
+  m_Center: {x: 0, y: 0}
 --- !u!1 &1009192645
 GameObject:
   m_ObjectHideFlags: 0

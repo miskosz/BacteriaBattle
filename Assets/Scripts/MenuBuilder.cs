@@ -3,6 +3,11 @@ using System.Collections;
 
 public class MenuBuilder : MonoBehaviour {
 
+	/*
+	 * I've made the button as a sprite with collider for now.
+	 * Maybe we'll have to use GUI when we have more on the main screen,
+	 * so I'm keeping this here for now.
+	 * 
 	void OnGUI() {
 
 		// temporary button size & placement
@@ -19,4 +24,5 @@ public class MenuBuilder : MonoBehaviour {
 			Application.LoadLevel("GameScene");
 		}
 	}
+	*/
 }
