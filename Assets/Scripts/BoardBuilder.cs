@@ -10,7 +10,10 @@ public class BoardBuilder : MonoBehaviour {
 	int blueCount = 0;
 	int orangeCount = 0;
 
-	public int xxxx;
+	public int x_offset;
+
+	public int bluex;
+	public int bluey;
 	
 
 	// initial board setup
@@ -280,9 +283,10 @@ public class BoardBuilder : MonoBehaviour {
 	}
 
 	void OnGUI() {
+		
+		GUI.Label(new Rect(Screen.width-x_offset, 10, 100, 20), "Orange: "+orangeCount);
 
-		GUI.Label(new Rect(20, Screen.height-30, 100, 20), "Blue: "+blueCount);
-		GUI.Label(new Rect(Screen.width-xxxx, 30, 100, 20), "Orange: "+orangeCount);
-
+		GUIUtility.RotateAroundPivot(-180, new Vector2(1, 1));
+		GUI.Label(new Rect(bluex, -Screen.height+bluey, 100, 20), "Blue: "+blueCount);
 	}
 }
