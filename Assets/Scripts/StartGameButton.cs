@@ -21,7 +21,10 @@ public class StartGameButton : MonoBehaviour {
 	void PlaySound(int clip){
 		Debug.Log("Any sounds?");
 		audio.clip = audioClip [clip];
-		audio.Play();
+		Debug.Log (audio.clip.name);
+		Debug.Log (audio.clip.isReadyToPlay);
+
+
 	
 	}
 }
