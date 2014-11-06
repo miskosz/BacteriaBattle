@@ -7,6 +7,9 @@ public class BoardBuilder : MonoBehaviour {
 	public GameObject boardCellPrefab;
 	public float cellDistance = 1;
 
+	public AudioClip divisionAudio;
+	public AudioClip gameOverAudio;
+
 	int blueCount = 0;
 	int orangeCount = 0;
 
@@ -115,6 +118,10 @@ public class BoardBuilder : MonoBehaviour {
 
 			// TODO
 
+			// play audio
+			audio.clip = gameOverAudio;
+			audio.Play();
+
 		}
 	}
 
@@ -137,7 +144,11 @@ public class BoardBuilder : MonoBehaviour {
 				board[ii,jj].setState(playerState[playerOnTurn]);
 			}
 		});
-		
+
+		// play dividing sound
+		audio.clip = divisionAudio;
+		audio.Play();
+
 		nextTurn();
 	}
 

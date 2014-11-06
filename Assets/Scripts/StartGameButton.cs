@@ -11,7 +11,7 @@ public class StartGameButton : MonoBehaviour {
 
 	void OnMouseDown() {
 		Debug.Log("StartGameButton was pressed");
-		PlaySound (0);
+		//PlaySound (0);
 		Application.LoadLevel("GameScene");
 		Debug.Log("Audio play");
 
