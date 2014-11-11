@@ -1,8 +1,8 @@
-/*using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class BoardBuilder : MonoBehaviour {
+public class SurvivalBuilder : MonoBehaviour {
 
 	public GameObject boardCellPrefab;
 	public float cellDistance = 1;
@@ -80,28 +80,34 @@ public class BoardBuilder : MonoBehaviour {
 		playerOnTurn = 1 - playerOnTurn;
 
 		// fill closed areas
-		fillClosedAreas();
+		//fillClosedAreas();
 
-		// set highlighted places
-		// iterate over board cells
 		bool hasMove = false;
 
-		forEachBoardCell((int i, int j) => {
-				
-			bool highlight = false;
-			if (board[i,j].isEmpty()) {
-				// iterate over cell neighbours
-				forEachCellNeighbour(i, j, (int ii, int jj) => {
-					if (board[ii,jj].getState() == playerState[playerOnTurn]) {
-						highlight = true;
-						hasMove = true;
+		if (playerOnTurn == 0) {
+			aiMove();
+			hasMove = true;
+		} 
+		else {
+			// set highlighted places
+			// iterate over board cells
+			forEachBoardCell ((int i, int j) => {
+	
+					bool highlight = false;
+					if (board [i, j].isEmpty ()) {
+							// iterate over cell neighbours
+							forEachCellNeighbour (i, j, (int ii, int jj) => {
+									if (board [ii, jj].getState () == playerState [playerOnTurn]) {
+											highlight = true;
+											hasMove = true;
+									}
+							});
 					}
-				});
-			}
-			board[i,j].setHighlighted(highlight); 
+					board [i, j].setHighlighted (highlight); 
 
 
-		});
+			});
+		}
 
 		getScore();
 
@@ -127,10 +133,12 @@ public class BoardBuilder : MonoBehaviour {
 
 	public void playerSelected(int i, int j) {
 		
+		//AI
+
 		//Debug.Log ("Player selected " + i + " " + j);
 		
 		// only moves to highlighted empty cells are valid
-		if (! board[i,j].getHighlighted() || ! board[i,j].isEmpty())
+		if ((! board[i,j].getHighlighted() || ! board[i,j].isEmpty()) && playerOnTurn == 1)
 			return;
 		
 		//Debug.Log ("It is a valid move.");
@@ -273,6 +281,25 @@ public class BoardBuilder : MonoBehaviour {
 		}
 	}
 
+	//ai logic
+	public void aiMove() {
+
+		int moveCount = 0;
+
+		forEachBoardCell((int i, int j) => {
+			
+			//Debug.Log(board[i,j].getState());
+			
+			if ((board[i,j].getState() == BoardCellState.Empty || board[i,j].getState() == BoardCellState.Orange) && moveCount < 1){
+				//Debug.Log("movecount: "+moveCount);
+				playerSelected(i,j);
+
+				moveCount++;
+			}
+		});		
+		
+	}
+
 	// score counting
 	public void getScore() {
 		int blueCountTemp = 0;
@@ -301,4 +328,3 @@ public class BoardBuilder : MonoBehaviour {
 		GUI.Label(new Rect(bluex, -Screen.height+bluey, 100, 100), "<color=#a6d2d1><size=50>"+blueCount+"</size></color>");
 	}
 }
-*/

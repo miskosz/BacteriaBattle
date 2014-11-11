@@ -21,10 +21,10 @@ public class BoardCell : MonoBehaviour {
 	int iPos, jPos;
 
 	// board builder
-	BoardBuilder boardBuilder;
+	SurvivalBuilder boardBuilder;
 
 	// called from BoardCellController when creating the board
-	public void Initialize(BoardBuilder parent, BoardCellState _state, int _iPos, int _jPos) {
+	public void Initialize(SurvivalBuilder parent, BoardCellState _state, int _iPos, int _jPos) {
 		boardBuilder = parent;
 		state = _state;
 		iPos = _iPos;
