@@ -10,13 +10,7 @@ public class BoardBuilder : MonoBehaviour {
 	public AudioClip divisionAudio;
 	public AudioClip gameOverAudio;
 
-	int blueCount = 0;
-	int orangeCount = 0;
-
-	public int x_offset;
-
-	public int bluex;
-	public int bluey;
+	int[] scoreCount = {0, 0};
 	
 
 	// initial board setup
@@ -103,7 +97,7 @@ public class BoardBuilder : MonoBehaviour {
 
 		});
 
-		getScore();
+		updateScore();
 
 		// detect game end
 		if (!hasMove) {
@@ -150,6 +144,22 @@ public class BoardBuilder : MonoBehaviour {
 		audio.Play();
 
 		nextTurn();
+	}
+
+	// score counting
+	public void updateScore() {
+		int[] tempScore = {0, 0};
+
+		forEachBoardCell((int i, int j) => {
+			if (!board[i,j].isEmpty())
+				tempScore[(int)board[i,j].getState()]++;
+		});
+		
+		scoreCount = tempScore;
+	}
+
+	public int getScore(BoardCellState player) {
+		return scoreCount[(int)player];
 	}
 
 	// simple struct for fillClosedAreas needs, do not use elsewhere if not nesessary
@@ -273,31 +283,5 @@ public class BoardBuilder : MonoBehaviour {
 		}
 	}
 
-	// score counting
-	public void getScore() {
-		int blueCountTemp = 0;
-		int orangeCountTemp = 0;
-		
-		forEachBoardCell((int i, int j) => {
-			
-			//Debug.Log(board[i,j].getState());
-			
-			if (board[i,j].getState() == BoardCellState.Blue) blueCountTemp++;
-			else if (board[i,j].getState() == BoardCellState.Orange) orangeCountTemp++;
 
-		});
-
-		blueCount = blueCountTemp;
-		orangeCount = orangeCountTemp;
-
-		Debug.Log("Blue:"+blueCount+" Orange:"+orangeCount);
-	}
-
-	void OnGUI() {
-
-		GUI.Label(new Rect(Screen.width-x_offset, 10, 100, 100), "<color=#f3c76f><size=50>"+orangeCount+"</size></color>");
-
-		GUIUtility.RotateAroundPivot(-180, new Vector2(1, 1));
-		GUI.Label(new Rect(bluex, -Screen.height+bluey, 100, 100), "<color=#a6d2d1><size=50>"+blueCount+"</size></color>");
-	}
 }
