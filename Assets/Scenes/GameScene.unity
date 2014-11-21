@@ -106,6 +106,7 @@ MonoBehaviour:
   cellDistance: 1
   divisionAudio: {fileID: 8300000, guid: b7a4740789bf44d84acd01f47b46fac4, type: 3}
   gameOverAudio: {fileID: 8300000, guid: a5389a80cf7184169b4df30bdd0380cd, type: 3}
+  playerOnTurn: 0
 --- !u!4 &31124283
 Transform:
   m_ObjectHideFlags: 0

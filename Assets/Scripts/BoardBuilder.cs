@@ -18,16 +18,16 @@ public class BoardBuilder : MonoBehaviour {
 	// 1 - empty
 	// 2 - blue
 	// 3 - orange
-//	int[,] boardSetup = {
-//		{1,1,1,2,0,0,0},
-//		{1,1,1,1,1,0,0},
-//		{1,1,1,1,1,1,0},
-//		{1,1,1,1,1,1,1},
-//		{0,1,1,1,1,1,1},
-//		{0,0,1,1,1,1,1},
-//		{0,0,0,3,1,1,1}
-//	};
 	int[,] boardSetup = {
+		{1,1,1,2,0,0,0},
+		{1,1,1,1,1,0,0},
+		{1,1,1,1,1,1,0},
+		{1,1,1,1,1,1,1},
+		{0,1,1,1,1,1,1},
+		{0,0,1,1,1,1,1},
+		{0,0,0,3,1,1,1}
+	};
+	/*int[,] boardSetup = {
 		{3,1,1,0,0},
 		{1,1,1,1,0},
 		{1,1,1,1,2},
@@ -36,13 +36,13 @@ public class BoardBuilder : MonoBehaviour {
 		{2,1,1,1,1},
 		{0,1,1,1,1},
 		{0,0,1,1,3}
-	};
+	};*/
 
 	// game board
 	BoardCell[,] board;
 
 	// whose turn is it (0 or 1), switched after start
-	int playerOnTurn = 0;
+	public int playerOnTurn = 0; // TODO: make safe maybe
 	BoardCellState[] playerState = {BoardCellState.Blue, BoardCellState.Orange};
 
 	void Start () {

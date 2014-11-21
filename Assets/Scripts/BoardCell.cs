@@ -10,6 +10,9 @@ public class BoardCell : MonoBehaviour {
 	public Sprite orangeBacteriaSprite;
 	public Sprite highlightedSprite;
 
+	public Color blueTint;
+	public Color orangeTint;
+
 	// cell state
 	BoardCellState state;
 
@@ -23,12 +26,16 @@ public class BoardCell : MonoBehaviour {
 	// board builder
 	BoardBuilder boardBuilder;
 
+	// renderer reference
+	SpriteRenderer spriteRenderer;
+	
 	// called from BoardCellController when creating the board
 	public void Initialize(BoardBuilder parent, BoardCellState _state, int _iPos, int _jPos) {
 		boardBuilder = parent;
 		state = _state;
 		iPos = _iPos;
 		jPos = _jPos;
+		spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
 		UpdateImage ();
 	}
 
@@ -39,19 +46,25 @@ public class BoardCell : MonoBehaviour {
 
 	void UpdateImage() {
 		if (state == BoardCellState.Blue)
-			gameObject.GetComponent<SpriteRenderer>().sprite = blueBacteriaSprite;
+			spriteRenderer.sprite = blueBacteriaSprite;
 		else if (state == BoardCellState.Orange)
-			gameObject.GetComponent<SpriteRenderer>().sprite = orangeBacteriaSprite;
+			spriteRenderer.sprite = orangeBacteriaSprite;
 		else if (highlighted)
-			gameObject.GetComponent<SpriteRenderer>().sprite = highlightedSprite;
+			spriteRenderer.sprite = highlightedSprite;
 		else
-			gameObject.GetComponent<SpriteRenderer>().sprite = null;
+			spriteRenderer.sprite = null;
 	}
 
 	// interface for highlighting
 	public bool getHighlighted() { return highlighted; }
 	public void setHighlighted(bool _highlighted = true) {
 		highlighted = _highlighted;
+
+		if (highlighted)
+			spriteRenderer.color = (boardBuilder.playerOnTurn == 0 ? blueTint : orangeTint);
+		else
+			spriteRenderer.color = Color.white;
+
 		UpdateImage ();
 	}
 
