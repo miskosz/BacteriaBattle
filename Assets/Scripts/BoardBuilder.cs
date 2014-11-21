@@ -18,14 +18,24 @@ public class BoardBuilder : MonoBehaviour {
 	// 1 - empty
 	// 2 - blue
 	// 3 - orange
+//	int[,] boardSetup = {
+//		{1,1,1,2,0,0,0},
+//		{1,1,1,1,1,0,0},
+//		{1,1,1,1,1,1,0},
+//		{1,1,1,1,1,1,1},
+//		{0,1,1,1,1,1,1},
+//		{0,0,1,1,1,1,1},
+//		{0,0,0,3,1,1,1}
+//	};
 	int[,] boardSetup = {
-		{1,1,1,2,0,0,0},
-		{1,1,1,1,1,0,0},
-		{1,1,1,1,1,1,0},
-		{1,1,1,1,1,1,1},
-		{0,1,1,1,1,1,1},
-		{0,0,1,1,1,1,1},
-		{0,0,0,3,1,1,1}
+		{3,1,1,0,0},
+		{1,1,1,1,0},
+		{1,1,1,1,2},
+		{1,1,1,1,1},
+		{1,1,1,1,1},
+		{2,1,1,1,1},
+		{0,1,1,1,1},
+		{0,0,1,1,3}
 	};
 
 	// game board
@@ -41,11 +51,18 @@ public class BoardBuilder : MonoBehaviour {
 		// i - rows, j - columns
 		Vector3 iVector = new Vector3 (0, -cellDistance, 0);
 		Vector3 jVector = new Vector3(Mathf.Cos(-Mathf.PI/6) * cellDistance, -Mathf.Sin(-Mathf.PI/6) * cellDistance, 0);
-		int iCenter = 3;
-		int jCenter = 3;
+
+		// get center coordinates
+		float iCenter = (boardSetup.GetLength(0)-1)/2.0f;
+		float jCenter = (boardSetup.GetLength(1)-1)/2.0f;
+
+		// compute scale factor
+		int standardWidth = 7;
+		float scaleFactor = standardWidth / (float)boardSetup.GetLength(1);
+		Debug.Log (scaleFactor);
 
 		// init the board
-		board = new BoardCell[7,7];
+		board = new BoardCell[boardSetup.GetLength(0),boardSetup.GetLength(1)];
 
 		forEachBoardCell((int i, int j) => {
 
@@ -61,7 +78,9 @@ public class BoardBuilder : MonoBehaviour {
 			// create board cell
 			//Debug.Log("Initializing " + i + " " + j);
 			board[i,j] = ((GameObject) Instantiate(boardCellPrefab)).GetComponent<BoardCell>();
+			board[i,j].transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
 			board[i,j].transform.position = (i-iCenter)*iVector + (j-jCenter)*jVector;
+			board[i,j].transform.position *= scaleFactor;
 			board[i,j].Initialize(this, state, i, j);
 		});
 
@@ -178,7 +197,7 @@ public class BoardBuilder : MonoBehaviour {
 
 		// detect weakly connected areas by a depth-first search
 
-		int[,] visited = new int[7,7];
+		int[,] visited = new int[boardSetup.GetLength(0),boardSetup.GetLength(1)];
 		int areaId = 0;
 
 		forEachBoardCell((int i, int j) => {
