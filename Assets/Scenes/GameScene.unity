@@ -328,9 +328,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boardBuilder: {fileID: 31124282}
-  bluex: -60
-  bluey: 15
-  x_offset: 60
+  orangex: 15
+  orangey: 60
+  bluex: 15
+  bluey: -60
 --- !u!4 &1395284952
 Transform:
   m_ObjectHideFlags: 0
