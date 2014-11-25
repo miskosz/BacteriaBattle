@@ -13,13 +13,11 @@ public class ExitGameButton : MonoBehaviour {
 	}
 
 	void OnMouseDown() {
-<<<<<<< HEAD
-		Application.LoadLevel("Menu");
-=======
+
 
 		spriteRenderer.sprite = exitDownSprite;
 
-		Application.LoadLevel("MainMenu");
->>>>>>> FETCH_HEAD
+		Application.LoadLevel("Menu");
+
 	}
 }
