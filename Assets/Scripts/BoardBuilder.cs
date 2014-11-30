@@ -28,6 +28,15 @@ public class BoardBuilder : MonoBehaviour {
 		{0,0,0,3,1,1,1}
 	};*/
 	int[,] boardSetup = {
+		{1,1,2,0,0,},
+		{1,1,1,1,0,},
+		{1,1,1,1,1,},
+		{1,1,1,1,1,},
+		{1,1,1,1,1,},
+		{0,1,1,1,1,},
+		{0,0,3,1,1,}
+	};
+		/*int[,] boardSetup = {
 		{3,1,1,0,0},
 		{1,1,1,1,0},
 		{1,1,1,1,2},
@@ -37,7 +46,7 @@ public class BoardBuilder : MonoBehaviour {
 		{2,1,1,1,1},
 		{0,1,1,1,1},
 		{0,0,1,1,3}
-	};
+	};*/
 
 	// game board
 	BoardCell[,] board;
