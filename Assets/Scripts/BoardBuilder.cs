@@ -10,6 +10,8 @@ public class BoardBuilder : MonoBehaviour {
 	public AudioClip divisionAudio;
 	public AudioClip gameOverAudio;
 
+	public PauseButton pauseButton;
+
 	int[] scoreCount = {0, 0};
 	
 
@@ -153,7 +155,7 @@ public class BoardBuilder : MonoBehaviour {
 		//Debug.Log ("Player selected " + i + " " + j);
 		
 		// only moves to highlighted empty cells are valid
-		if (! board[i,j].getHighlighted() || ! board[i,j].isEmpty())
+		if (! board[i,j].getHighlighted() || ! board[i,j].isEmpty() || pauseButton.getMenuVisible())
 			return;
 		
 		//Debug.Log ("It is a valid move.");
@@ -311,6 +313,5 @@ public class BoardBuilder : MonoBehaviour {
 			}
 		}
 	}
-
 
 }
