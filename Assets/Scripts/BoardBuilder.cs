@@ -55,7 +55,7 @@ public class BoardBuilder : MonoBehaviour {
 
 	// whose turn is it (0 or 1), switched after start
 	public int playerOnTurn = 0; // TODO: make safe maybe
-	BoardCellState[] playerState = {BoardCellState.Blue, BoardCellState.Orange};
+	BoardCellState[] playerState = {BoardCellState.Player1, BoardCellState.Player2};
 
 	void Start () {
 
@@ -82,8 +82,8 @@ public class BoardBuilder : MonoBehaviour {
 			BoardCellState state;
 			switch (boardSetup[i,j]) {
 			case 1: state = BoardCellState.Empty; break;
-			case 2: state = BoardCellState.Blue; break;
-			case 3: state = BoardCellState.Orange; break;
+			case 2: state = BoardCellState.Player1; break;
+			case 3: state = BoardCellState.Player2; break;
 			default: throw new UnityException("Invalid board setup cell state.");
 			}
 
