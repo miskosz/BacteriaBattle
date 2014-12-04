@@ -36,6 +36,8 @@ public class BoardCell : MonoBehaviour {
 		iPos = _iPos;
 		jPos = _jPos;
 		spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+		spriteRenderer.sortingOrder = 0;
+		spriteRenderer.sortingLayerName = "Board";
 		UpdateImage ();
 	}
 
