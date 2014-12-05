@@ -1,19 +1,20 @@
 fileFormatVersion: 2
-guid: 051503e66f71947f6bcb91d3697ecb4d
+guid: fb5f57bba1e894cc3a6daf736dc285c7
 TextureImporter:
   fileIDToRecycleName:
-    21300000: dividing_anim_test_v1_0
-    21300002: dividing_anim_test_v1_1
-    21300004: dividing_anim_test_v1_2
-    21300006: dividing_anim_test_v1_3
-    21300008: dividing_anim_test_v1_4
-    21300010: dividing_anim_test_v1_5
-    21300012: dividing_anim_test_v1_6
-    21300014: dividing_anim_test_v1_7
-    21300016: dividing_anim_test_v1_8
-    21300018: dividing_anim_test_v1_9
-    21300020: dividing_anim_test_v1_10
-    21300022: dividing_anim_test_v1_11
+    21300000: winner_spritesheet_0
+    21300002: winner_spritesheet_1
+    21300004: winner_spritesheet_2
+    21300006: winner_spritesheet_3
+    21300008: winner_spritesheet_4
+    21300010: winner_spritesheet_5
+    21300012: winner_spritesheet_6
+    21300014: winner_spritesheet_7
+    21300016: winner_spritesheet_8
+    21300018: winner_spritesheet_9
+    21300020: winner_spritesheet_10
+    21300022: winner_spritesheet_11
+    21300024: winner_spritesheet_12
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -55,123 +56,133 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: dividing_anim_test_v1_0
+    - name: winner_spritesheet_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 256
-        width: 256
-        height: 128
+        y: 690
+        width: 640
+        height: 230
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: dividing_anim_test_v1_1
+    - name: winner_spritesheet_1
       rect:
         serializedVersion: 2
-        x: 256
-        y: 256
-        width: 256
-        height: 128
+        x: 640
+        y: 690
+        width: 640
+        height: 230
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: dividing_anim_test_v1_2
+    - name: winner_spritesheet_2
       rect:
         serializedVersion: 2
-        x: 512
-        y: 256
-        width: 256
-        height: 128
+        x: 1280
+        y: 690
+        width: 640
+        height: 230
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: dividing_anim_test_v1_3
+    - name: winner_spritesheet_3
       rect:
         serializedVersion: 2
-        x: 768
-        y: 256
-        width: 256
-        height: 128
+        x: 1920
+        y: 690
+        width: 640
+        height: 230
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: dividing_anim_test_v1_4
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 128
-        width: 256
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: dividing_anim_test_v1_5
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 128
-        width: 256
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: dividing_anim_test_v1_6
-      rect:
-        serializedVersion: 2
-        x: 512
-        y: 128
-        width: 256
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: dividing_anim_test_v1_7
-      rect:
-        serializedVersion: 2
-        x: 768
-        y: 128
-        width: 256
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: dividing_anim_test_v1_8
+    - name: winner_spritesheet_4
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 256
-        height: 128
+        y: 460
+        width: 640
+        height: 230
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: dividing_anim_test_v1_9
+    - name: winner_spritesheet_5
       rect:
         serializedVersion: 2
-        x: 256
-        y: 0
-        width: 256
-        height: 128
+        x: 640
+        y: 460
+        width: 640
+        height: 230
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: dividing_anim_test_v1_10
+    - name: winner_spritesheet_6
       rect:
         serializedVersion: 2
-        x: 512
-        y: 0
-        width: 256
-        height: 128
+        x: 1280
+        y: 460
+        width: 640
+        height: 230
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: dividing_anim_test_v1_11
+    - name: winner_spritesheet_7
       rect:
         serializedVersion: 2
-        x: 768
+        x: 1920
+        y: 460
+        width: 640
+        height: 230
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: winner_spritesheet_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 230
+        width: 640
+        height: 230
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: winner_spritesheet_9
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 230
+        width: 640
+        height: 230
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: winner_spritesheet_10
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 230
+        width: 640
+        height: 230
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: winner_spritesheet_11
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 230
+        width: 640
+        height: 230
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: winner_spritesheet_12
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 0
-        width: 256
-        height: 128
+        width: 640
+        height: 230
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
