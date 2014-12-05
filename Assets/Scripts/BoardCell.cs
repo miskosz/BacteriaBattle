@@ -2,12 +2,12 @@
 using System.Collections;
 //using System.Collections.Generic;
 
-public enum BoardCellState {Blue, Orange, Empty};
+public enum BoardCellState {Player1, Player2, Empty};
 
 public class BoardCell : MonoBehaviour {
 
-    public Sprite blueBacteriaSprite;
-	public Sprite orangeBacteriaSprite;
+    //public Sprite blueBacteriaSprite;
+	//public Sprite orangeBacteriaSprite;
 	public Sprite highlightedSprite;
 
 	public Color blueTint;
@@ -26,17 +26,23 @@ public class BoardCell : MonoBehaviour {
 	// board builder
 	BoardBuilder boardBuilder;
 
-	// renderer reference
+	// renderer & animator reference
 	SpriteRenderer spriteRenderer;
+	Animator animator;
 	
 	// called from BoardCellController when creating the board
 	public void Initialize(BoardBuilder parent, BoardCellState _state, int _iPos, int _jPos) {
 		boardBuilder = parent;
-		state = _state;
 		iPos = _iPos;
 		jPos = _jPos;
 		spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-		UpdateImage ();
+		spriteRenderer.sortingOrder = 0;
+		spriteRenderer.sortingLayerName = "Board";
+
+		animator = gameObject.GetComponent<Animator>();
+
+		setState(_state);
+
 	}
 
     void OnMouseDown() {
@@ -45,14 +51,14 @@ public class BoardCell : MonoBehaviour {
     }
 
 	void UpdateImage() {
-		if (state == BoardCellState.Blue)
-			spriteRenderer.sprite = blueBacteriaSprite;
-		else if (state == BoardCellState.Orange)
-			spriteRenderer.sprite = orangeBacteriaSprite;
+		if (state == BoardCellState.Player1)
+			PlayAnimation("Player1_Idle");
+		else if (state == BoardCellState.Player2)
+			PlayAnimation("Player2_Idle");
 		else if (highlighted)
-			spriteRenderer.sprite = highlightedSprite;
+			PlayAnimation("Highlighted");
 		else
-			spriteRenderer.sprite = null;
+			PlayAnimation("Empty");
 	}
 
 	// interface for highlighting
@@ -71,12 +77,18 @@ public class BoardCell : MonoBehaviour {
 	// interface for state change
 	public BoardCellState getState() { return state; }
 	public void setState(BoardCellState _state) {
-		state = _state;
-		UpdateImage ();
+		if (state != _state) {
+			state = _state;
+			UpdateImage ();
+		}
 	}
 
 	// helper function
 	public bool isEmpty() { return state == BoardCellState.Empty; }
 
-
+	// unity triggers are weird
+	void PlayAnimation(string animationName){
+		if (!animator.GetCurrentAnimatorStateInfo(0).IsName(animationName))
+			animator.SetTrigger(animationName);
+	}
 }

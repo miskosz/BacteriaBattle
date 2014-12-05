@@ -11,6 +11,7 @@ GameObject:
   - 58: {fileID: 5800000}
   - 212: {fileID: 21200000}
   - 114: {fileID: 11400000}
+  - 95: {fileID: 9500000}
   m_Layer: 0
   m_Name: BoardCell
   m_TagString: Untagged
@@ -71,6 +72,21 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_Radius: .5
   m_Center: {x: 0, y: 0}
+--- !u!95 &9500000
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 53e0825277c6d4efa87fa2a194f11165, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -82,9 +98,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dae5ff38259b4acabc17dec4ec99bf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blueBacteriaSprite: {fileID: 21300000, guid: ab64fded90a84494a90afa1e7591ed84, type: 3}
-  orangeBacteriaSprite: {fileID: 21300000, guid: 1eb422217d6c04d438efd8fb96f56b07,
-    type: 3}
   highlightedSprite: {fileID: 21300000, guid: ac8c6c0a9fdb84c6c8142741a48b8d39, type: 3}
   blueTint: {r: .602941155, g: .950709939, b: 1, a: 1}
   orangeTint: {r: 1, g: .758823574, b: .573529422, a: 1}
@@ -119,7 +132,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: ab64fded90a84494a90afa1e7591ed84, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!212 &21200002
 SpriteRenderer:

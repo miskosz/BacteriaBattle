@@ -10,6 +10,8 @@ public class BoardBuilder : MonoBehaviour {
 	public AudioClip divisionAudio;
 	public AudioClip gameOverAudio;
 
+	public PauseButton pauseButton;
+
 	int[] scoreCount = {0, 0};
 	
 
@@ -18,7 +20,7 @@ public class BoardBuilder : MonoBehaviour {
 	// 1 - empty
 	// 2 - blue
 	// 3 - orange
-	int[,] boardSetup = {
+	/*int[,] boardSetup = {
 		{1,1,1,2,0,0,0},
 		{1,1,1,1,1,0,0},
 		{1,1,1,1,1,1,0},
@@ -26,13 +28,23 @@ public class BoardBuilder : MonoBehaviour {
 		{0,1,1,1,1,1,1},
 		{0,0,1,1,1,1,1},
 		{0,0,0,3,1,1,1}
+	};*/
+	int[,] boardSetup = {
+		{1,1,2,0,0,},
+		{1,1,1,1,0,},
+		{1,1,1,1,1,},
+		{1,1,1,1,1,},
+		{1,1,1,1,1,},
+		{0,1,1,1,1,},
+		{0,0,3,1,1,}
 	};
-	/*int[,] boardSetup = {
+		/*int[,] boardSetup = {
 		{3,1,1,0,0},
 		{1,1,1,1,0},
 		{1,1,1,1,2},
+		{0,1,1,1,1},
 		{1,1,1,1,1},
-		{1,1,1,1,1},
+		{1,1,1,1,0},
 		{2,1,1,1,1},
 		{0,1,1,1,1},
 		{0,0,1,1,3}
@@ -43,7 +55,7 @@ public class BoardBuilder : MonoBehaviour {
 
 	// whose turn is it (0 or 1), switched after start
 	public int playerOnTurn = 0; // TODO: make safe maybe
-	BoardCellState[] playerState = {BoardCellState.Blue, BoardCellState.Orange};
+	BoardCellState[] playerState = {BoardCellState.Player1, BoardCellState.Player2};
 
 	void Start () {
 
@@ -70,8 +82,8 @@ public class BoardBuilder : MonoBehaviour {
 			BoardCellState state;
 			switch (boardSetup[i,j]) {
 			case 1: state = BoardCellState.Empty; break;
-			case 2: state = BoardCellState.Blue; break;
-			case 3: state = BoardCellState.Orange; break;
+			case 2: state = BoardCellState.Player1; break;
+			case 3: state = BoardCellState.Player2; break;
 			default: throw new UnityException("Invalid board setup cell state.");
 			}
 
@@ -143,7 +155,7 @@ public class BoardBuilder : MonoBehaviour {
 		//Debug.Log ("Player selected " + i + " " + j);
 		
 		// only moves to highlighted empty cells are valid
-		if (! board[i,j].getHighlighted() || ! board[i,j].isEmpty())
+		if (! board[i,j].getHighlighted() || ! board[i,j].isEmpty() || pauseButton.getMenuVisible())
 			return;
 		
 		//Debug.Log ("It is a valid move.");
@@ -301,6 +313,5 @@ public class BoardBuilder : MonoBehaviour {
 			}
 		}
 	}
-
 
 }
