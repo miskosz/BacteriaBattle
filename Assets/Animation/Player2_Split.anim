@@ -5,7 +5,7 @@ AnimationClip:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Player1_Split
+  m_Name: Player2_Split
   serializedVersion: 4
   m_AnimationType: 2
   m_Compressed: 0
@@ -27,19 +27,19 @@ AnimationClip:
       value: {fileID: 21300006, guid: 051503e66f71947f6bcb91d3697ecb4d, type: 3}
     - time: .166666672
       value: {fileID: 21300008, guid: 051503e66f71947f6bcb91d3697ecb4d, type: 3}
-    - time: .208333343
+    - time: .208333328
       value: {fileID: 21300010, guid: 051503e66f71947f6bcb91d3697ecb4d, type: 3}
     - time: .25
       value: {fileID: 21300012, guid: 051503e66f71947f6bcb91d3697ecb4d, type: 3}
     - time: .291666657
       value: {fileID: 21300014, guid: 051503e66f71947f6bcb91d3697ecb4d, type: 3}
-    - time: .333333313
+    - time: .333333343
       value: {fileID: 21300016, guid: 051503e66f71947f6bcb91d3697ecb4d, type: 3}
-    - time: .37499997
+    - time: .375
       value: {fileID: 21300018, guid: 051503e66f71947f6bcb91d3697ecb4d, type: 3}
-    - time: .416666627
+    - time: .416666657
       value: {fileID: 21300020, guid: 051503e66f71947f6bcb91d3697ecb4d, type: 3}
-    - time: .458333284
+    - time: .458333343
       value: {fileID: 21300022, guid: 051503e66f71947f6bcb91d3697ecb4d, type: 3}
     attribute: m_Sprite
     path: 
@@ -74,7 +74,7 @@ AnimationClip:
   m_AnimationClipSettings:
     serializedVersion: 2
     m_StartTime: 0
-    m_StopTime: .49999994
+    m_StopTime: .5
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0

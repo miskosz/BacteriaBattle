@@ -162,7 +162,17 @@ public class BoardBuilder : MonoBehaviour {
 		
 		// new bacteria here, please!
 		board[i,j].setState(playerState[playerOnTurn]);
-		
+
+		// animate the originating cell
+		BoardCell origin = null;
+		forEachCellNeighbour(i, j, (int ii, int jj) => {
+			if (board[ii,jj].getState() == playerState[playerOnTurn]) {
+				origin = board[ii,jj];
+			}
+		});
+		if (origin)
+			origin.Split(board[i,j]);
+
 		// convert neighbours
 		forEachCellNeighbour(i, j, (int ii, int jj) => {
 			if (board[ii,jj].getState() == playerState[1-playerOnTurn]) {
@@ -171,6 +181,7 @@ public class BoardBuilder : MonoBehaviour {
 		});
 
 		// play dividing sound
+		// TODO: move to BoardCell
 		audio.clip = divisionAudio;
 		audio.Play();
 

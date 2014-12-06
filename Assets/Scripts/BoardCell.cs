@@ -86,6 +86,16 @@ public class BoardCell : MonoBehaviour {
 	// helper function
 	public bool isEmpty() { return state == BoardCellState.Empty; }
 
+	// trigger splitting animation
+	public void Split(BoardCell dest) {
+		// temporary
+		// try rotations
+		Vector3 direction = dest.transform.position - transform.position;
+		transform.rotation = Quaternion.FromToRotation(Vector3.right, direction);
+
+		animator.SetTrigger("Split");
+	}
+
 	// unity triggers are weird
 	void PlayAnimation(string animationName){
 		if (!animator.GetCurrentAnimatorStateInfo(0).IsName(animationName))
