@@ -59,14 +59,14 @@ Transition:
   m_Name: 
   m_SrcState: {fileID: 0}
   m_DstState: {fileID: 110200000}
-  m_TransitionDuration: .100000001
-  m_TransitionOffset: 0
+  m_TransitionDuration: 0
+  m_TransitionOffset: .00401589507
   m_Conditions:
   - m_ConditionMode: 1
     m_ConditionEvent: Player1_Idle
     m_EventTreshold: 0
     m_ExitTime: .899999976
-  m_Atomic: 1
+  m_Atomic: 0
   m_Solo: 0
   m_Mute: 0
   m_CanTransitionToSelf: 0
@@ -86,7 +86,7 @@ Transition:
     m_ConditionEvent: Split
     m_EventTreshold: 0
     m_ExitTime: 1
-  m_Atomic: 1
+  m_Atomic: 0
   m_Solo: 0
   m_Mute: 0
   m_CanTransitionToSelf: 0
@@ -106,7 +106,7 @@ Transition:
     m_ConditionEvent: Highlighted
     m_EventTreshold: 0
     m_ExitTime: .899999976
-  m_Atomic: 1
+  m_Atomic: 0
   m_Solo: 0
   m_Mute: 0
   m_CanTransitionToSelf: 0
@@ -126,7 +126,7 @@ Transition:
     m_ConditionEvent: 
     m_EventTreshold: 0
     m_ExitTime: 1
-  m_Atomic: 1
+  m_Atomic: 0
   m_Solo: 0
   m_Mute: 0
   m_CanTransitionToSelf: 0
@@ -146,7 +146,7 @@ Transition:
     m_ConditionEvent: Empty
     m_EventTreshold: 0
     m_ExitTime: .899999976
-  m_Atomic: 1
+  m_Atomic: 0
   m_Solo: 0
   m_Mute: 0
   m_CanTransitionToSelf: 0
@@ -166,7 +166,7 @@ Transition:
     m_ConditionEvent: 
     m_EventTreshold: 0
     m_ExitTime: 1
-  m_Atomic: 1
+  m_Atomic: 0
   m_Solo: 0
   m_Mute: 0
   m_CanTransitionToSelf: 0
@@ -179,14 +179,14 @@ Transition:
   m_Name: 
   m_SrcState: {fileID: 0}
   m_DstState: {fileID: 110241083}
-  m_TransitionDuration: .100000001
+  m_TransitionDuration: .00120666332
   m_TransitionOffset: 0
   m_Conditions:
   - m_ConditionMode: 1
     m_ConditionEvent: Player2_Idle
     m_EventTreshold: 0
     m_ExitTime: .899999976
-  m_Atomic: 1
+  m_Atomic: 0
   m_Solo: 0
   m_Mute: 0
   m_CanTransitionToSelf: 0
@@ -226,7 +226,7 @@ Transition:
     m_ConditionEvent: Split
     m_EventTreshold: 0
     m_ExitTime: 1
-  m_Atomic: 1
+  m_Atomic: 0
   m_Solo: 0
   m_Mute: 0
   m_CanTransitionToSelf: 0
@@ -339,10 +339,6 @@ StateMachine:
   m_ChildStateMachinePosition: []
   m_OrderedTransitions:
     data:
-      first: {fileID: 110226231}
-      second:
-      - {fileID: 110143797}
-    data:
       first: {fileID: 0}
       second:
       - {fileID: 110100000}
@@ -367,6 +363,10 @@ StateMachine:
     data:
       first: {fileID: 110242318}
       second: []
+    data:
+      first: {fileID: 110226231}
+      second:
+      - {fileID: 110143797}
   m_MotionSetCount: 1
   m_AnyStatePosition: {x: 312, y: 60, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}

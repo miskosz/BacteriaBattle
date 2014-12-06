@@ -47,7 +47,7 @@ public class BoardCell : MonoBehaviour {
 
     void OnMouseDown() {
         // notify BoardBuilder
-		boardBuilder.playerSelected(iPos, jPos);
+		StartCoroutine(boardBuilder.playerSelected(iPos, jPos));
     }
 
 	void UpdateImage() {
@@ -92,6 +92,7 @@ public class BoardCell : MonoBehaviour {
 		// try rotations
 		Vector3 direction = dest.transform.position - transform.position;
 		transform.rotation = Quaternion.FromToRotation(Vector3.right, direction);
+		dest.transform.rotation = transform.rotation;
 
 		animator.SetTrigger("Split");
 	}

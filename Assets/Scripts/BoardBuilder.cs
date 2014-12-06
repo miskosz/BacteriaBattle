@@ -7,6 +7,9 @@ public class BoardBuilder : MonoBehaviour {
 	public GameObject boardCellPrefab;
 	public float cellDistance = 1;
 
+	// this is bad and you should feel bad
+	public float splittingAnimDuration = 0.5f;
+
 	public AudioClip divisionAudio;
 	public AudioClip gameOverAudio;
 
@@ -97,7 +100,7 @@ public class BoardBuilder : MonoBehaviour {
 		});
 
 		// initialize highlighted cells & stuff
-		nextTurn ();
+		nextTurn();
 	}
 
 	void nextTurn() {
@@ -125,7 +128,6 @@ public class BoardBuilder : MonoBehaviour {
 			}
 			board[i,j].setHighlighted(highlight); 
 
-
 		});
 
 		updateScore();
@@ -141,8 +143,6 @@ public class BoardBuilder : MonoBehaviour {
 				}
 			});
 
-			// TODO
-
 			// play audio
 			audio.clip = gameOverAudio;
 			audio.Play();
@@ -150,42 +150,44 @@ public class BoardBuilder : MonoBehaviour {
 		}
 	}
 
-	public void playerSelected(int i, int j) {
+	public IEnumerator playerSelected(int i, int j) {
 		
 		//Debug.Log ("Player selected " + i + " " + j);
 		
 		// only moves to highlighted empty cells are valid
-		if (! board[i,j].getHighlighted() || ! board[i,j].isEmpty() || pauseButton.getMenuVisible())
-			return;
+		if (board[i,j].getHighlighted() && board[i,j].isEmpty() && !pauseButton.getMenuVisible()) {
 		
-		//Debug.Log ("It is a valid move.");
-		
-		// new bacteria here, please!
-		board[i,j].setState(playerState[playerOnTurn]);
+			//Debug.Log ("It is a valid move.");
 
-		// animate the originating cell
-		BoardCell origin = null;
-		forEachCellNeighbour(i, j, (int ii, int jj) => {
-			if (board[ii,jj].getState() == playerState[playerOnTurn]) {
-				origin = board[ii,jj];
+			// animate the originating cell
+			BoardCell origin = null;
+			forEachCellNeighbour(i, j, (int ii, int jj) => {
+				if (board[ii,jj].getState() == playerState[playerOnTurn]) {
+					origin = board[ii,jj];
+				}
+			});
+
+			if (origin) {
+				// play dividing sound
+				audio.clip = divisionAudio;
+				audio.Play();
+
+				origin.Split(board[i,j]);
+				yield return new WaitForSeconds(splittingAnimDuration);
 			}
-		});
-		if (origin)
-			origin.Split(board[i,j]);
 
-		// convert neighbours
-		forEachCellNeighbour(i, j, (int ii, int jj) => {
-			if (board[ii,jj].getState() == playerState[1-playerOnTurn]) {
-				board[ii,jj].setState(playerState[playerOnTurn]);
-			}
-		});
+			// new bacteria here, please!
+			board[i,j].setState(playerState[playerOnTurn]);
+			
+			// convert neighbours
+			forEachCellNeighbour(i, j, (int ii, int jj) => {
+				if (board[ii,jj].getState() == playerState[1-playerOnTurn]) {
+					board[ii,jj].setState(playerState[playerOnTurn]);
+				}
+			});
 
-		// play dividing sound
-		// TODO: move to BoardCell
-		audio.clip = divisionAudio;
-		audio.Play();
-
-		nextTurn();
+			nextTurn();
+		}
 	}
 
 	// score counting
