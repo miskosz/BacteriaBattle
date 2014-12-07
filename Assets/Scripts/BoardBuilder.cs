@@ -16,6 +16,8 @@ public class BoardBuilder : MonoBehaviour {
 	public PauseButton pauseButton;
 
 	int[] scoreCount = {0, 0};
+
+	bool inputEnabled = true;
 	
 
 	// initial board setup
@@ -155,9 +157,11 @@ public class BoardBuilder : MonoBehaviour {
 		//Debug.Log ("Player selected " + i + " " + j);
 		
 		// only moves to highlighted empty cells are valid
-		if (board[i,j].getHighlighted() && board[i,j].isEmpty() && !pauseButton.getMenuVisible()) {
+		if (inputEnabled && board[i,j].getHighlighted() && board[i,j].isEmpty() && !pauseButton.getMenuVisible()) {
 		
 			//Debug.Log ("It is a valid move.");
+
+			disableInput();
 
 			// animate the originating cell
 			BoardCell origin = null;
@@ -187,6 +191,7 @@ public class BoardBuilder : MonoBehaviour {
 			});
 
 			nextTurn();
+			enableInput();
 		}
 	}
 
@@ -204,6 +209,14 @@ public class BoardBuilder : MonoBehaviour {
 
 	public int getScore(BoardCellState player) {
 		return scoreCount[(int)player];
+	}
+
+	public void disableInput() {
+		inputEnabled = false;
+	}
+
+	public void enableInput() {
+		inputEnabled = true;
 	}
 
 	// simple struct for fillClosedAreas needs, do not use elsewhere if not nesessary
