@@ -6,10 +6,9 @@ public enum BoardCellState {Player1, Player2, Empty};
 
 public class BoardCell : MonoBehaviour {
 
-    //public Sprite blueBacteriaSprite;
-	//public Sprite orangeBacteriaSprite;
-	public Sprite highlightedSprite;
+	public GameObject cellBackgroundPrefab;
 
+	public Sprite highlightedSprite;
 	public Color blueTint;
 	public Color orangeTint;
 
@@ -29,8 +28,16 @@ public class BoardCell : MonoBehaviour {
 	// renderer & animator reference
 	SpriteRenderer spriteRenderer;
 	Animator animator;
-	
-	// called from BoardCellController when creating the board
+
+	void Start() {
+		// create board cell backgroung
+		//Debug.Log("Initializing " + i + " " + j);
+		CellBackground background = ((GameObject) Instantiate(cellBackgroundPrefab)).GetComponent<CellBackground>();
+		background.transform.position = transform.position;
+		background.transform.localScale = transform.localScale;
+	}
+		                      
+		                      // called from BoardCellController when creating the board
 	public void Initialize(BoardBuilder parent, BoardCellState _state, int _iPos, int _jPos) {
 		boardBuilder = parent;
 		iPos = _iPos;
