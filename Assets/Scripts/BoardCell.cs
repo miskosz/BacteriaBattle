@@ -54,6 +54,7 @@ public class BoardCell : MonoBehaviour {
 
     void OnMouseDown() {
         // notify BoardBuilder
+		Debug.Log("Wut");
 		StartCoroutine(boardBuilder.playerSelected(iPos, jPos));
     }
 
