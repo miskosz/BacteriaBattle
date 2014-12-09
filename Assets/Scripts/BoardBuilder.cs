@@ -76,7 +76,7 @@ public class BoardBuilder : MonoBehaviour {
 		// compute scale factor
 		int standardWidth = 7;
 		float scaleFactor = standardWidth / (float)boardSetup.GetLength(1);
-		Debug.Log (scaleFactor);
+		//Debug.Log(scaleFactor);
 
 		// init the board
 		board = new BoardCell[boardSetup.GetLength(0),boardSetup.GetLength(1)];
@@ -98,7 +98,9 @@ public class BoardBuilder : MonoBehaviour {
 			board[i,j].transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
 			board[i,j].transform.position = (i-iCenter)*iVector + (j-jCenter)*jVector;
 			board[i,j].transform.position *= scaleFactor;
-			board[i,j].Initialize(this, state, i, j);
+			board[i,j].Initialize(this, i, j);
+			if (state != BoardCellState.Empty)
+				board[i,j].Spawn(state);
 		});
 
 		// initialize highlighted cells & stuff
@@ -128,7 +130,7 @@ public class BoardBuilder : MonoBehaviour {
 					}
 				});
 			}
-			board[i,j].setHighlighted(highlight); 
+			board[i,j].setHighlighted(highlight, playerState[playerOnTurn]); 
 
 		});
 
@@ -141,7 +143,7 @@ public class BoardBuilder : MonoBehaviour {
 			// all remaining cells are opponent's
 			forEachBoardCell((int i, int j) => {
 				if (board[i,j].isEmpty()) {
-						board[i,j].setState(playerState[1-playerOnTurn]);
+						board[i,j].Spawn(playerState[1-playerOnTurn]);
 				}
 			});
 
@@ -154,7 +156,7 @@ public class BoardBuilder : MonoBehaviour {
 
 	public IEnumerator playerSelected(int i, int j) {
 		
-		Debug.Log ("Player selected " + i + " " + j);
+		//Debug.Log ("Player selected " + i + " " + j);
 		
 		// only moves to highlighted empty cells are valid
 		if (inputEnabled && board[i,j].getHighlighted() && board[i,j].isEmpty()) {
@@ -181,12 +183,12 @@ public class BoardBuilder : MonoBehaviour {
 			}
 
 			// new bacteria here, please!
-			board[i,j].setState(playerState[playerOnTurn]);
+			board[i,j].Appear(playerState[playerOnTurn]);
 			
 			// convert neighbours
 			forEachCellNeighbour(i, j, (int ii, int jj) => {
 				if (board[ii,jj].getState() == playerState[1-playerOnTurn]) {
-					board[ii,jj].setState(playerState[playerOnTurn]);
+					board[ii,jj].Convert();
 				}
 			});
 
@@ -283,7 +285,7 @@ public class BoardBuilder : MonoBehaviour {
 				if (isUniform) {
 					forEachBoardCell((int ni, int nj) => {
 						if (visited[ni,nj] == areaId) {
-							board[ni,nj].setState(boundary);
+							board[ni,nj].Spawn(boundary);
 						}
 					});
 				}

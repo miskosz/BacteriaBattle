@@ -6,18 +6,8 @@ public enum BoardCellState {Player1, Player2, Empty};
 
 public class BoardCell : MonoBehaviour {
 
-	public GameObject cellBackgroundPrefab;
-
-	public Sprite highlightedSprite;
-	public Color blueTint;
-	public Color orangeTint;
-
 	// cell state
 	BoardCellState state;
-
-	// TODO: currently only empty cell can be highlighted,
-	// I do not know how to render two sprites independently.
-	bool highlighted = false;
 
 	// cell coordinates
 	int iPos, jPos;
@@ -26,73 +16,69 @@ public class BoardCell : MonoBehaviour {
 	BoardBuilder boardBuilder;
 
 	// renderer & animator reference
-	SpriteRenderer spriteRenderer;
 	Animator animator;
-
-	void Start() {
-		// create board cell backgroung
-		//Debug.Log("Initializing " + i + " " + j);
-		CellBackground background = ((GameObject) Instantiate(cellBackgroundPrefab)).GetComponent<CellBackground>();
-		background.transform.position = transform.position;
-		background.transform.localScale = transform.localScale;
-	}
-		                      
-		                      // called from BoardCellController when creating the board
-	public void Initialize(BoardBuilder parent, BoardCellState _state, int _iPos, int _jPos) {
+	CellHighlight cellHighlight;
+			                      
+	// called from BoardCellController when creating the board
+	public void Initialize(BoardBuilder parent, int _iPos, int _jPos) {
 		boardBuilder = parent;
 		iPos = _iPos;
 		jPos = _jPos;
-		spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-		spriteRenderer.sortingOrder = 0;
-		spriteRenderer.sortingLayerName = "Board";
+		state = BoardCellState.Empty;
 
-		animator = gameObject.GetComponent<Animator>();
-
-		setState(_state);
-
+		animator = gameObject.GetComponentInChildren<Animator>();
+		cellHighlight = gameObject.GetComponentInChildren<CellHighlight>();
 	}
 
     void OnMouseDown() {
         // notify BoardBuilder
-		Debug.Log("Wut");
 		StartCoroutine(boardBuilder.playerSelected(iPos, jPos));
     }
 
-	void UpdateImage() {
-		if (state == BoardCellState.Player1)
-			PlayAnimation("Player1_Idle");
-		else if (state == BoardCellState.Player2)
-			PlayAnimation("Player2_Idle");
-		else if (highlighted)
-			PlayAnimation("Highlighted");
-		else
-			PlayAnimation("Empty");
-	}
-
 	// interface for highlighting
-	public bool getHighlighted() { return highlighted; }
-	public void setHighlighted(bool _highlighted = true) {
-		highlighted = _highlighted;
-
-		if (highlighted)
-			spriteRenderer.color = (boardBuilder.playerOnTurn == 0 ? blueTint : orangeTint);
-		else
-			spriteRenderer.color = Color.white;
-
-		UpdateImage ();
-	}
-
-	// interface for state change
-	public BoardCellState getState() { return state; }
-	public void setState(BoardCellState _state) {
-		if (state != _state) {
-			state = _state;
-			UpdateImage ();
-		}
+	public bool getHighlighted() { return cellHighlight.getHighlighted(); }
+	public void setHighlighted(bool highlighted, BoardCellState _state) {
+		cellHighlight.setHighlighted(highlighted, _state);
 	}
 
 	// helper function
 	public bool isEmpty() { return state == BoardCellState.Empty; }
+
+	// interface for state change
+	public BoardCellState getState() { return state; }
+
+
+	//////////////////////////////////////////////////////////
+	/// 
+	///      STATE TRANSITIONS
+	///
+	//////////////////////////////////////////////////////////
+
+
+	public void Appear(BoardCellState _state) {
+		state = _state;
+		if (state == BoardCellState.Player1)
+			PlayAnimation("Player1_Idle");
+		else if (state == BoardCellState.Player2)
+			PlayAnimation("Player2_Idle");
+	}
+
+	public void Spawn(BoardCellState _state) {
+		state = _state;
+		if (state == BoardCellState.Player1)
+			PlayAnimation("Player1_Spawn");
+		else if (state == BoardCellState.Player2)
+			PlayAnimation("Player2_Spawn");
+	}
+
+
+	// convert bacteria
+	public void Convert() {
+		BoardCellState newState = (state == BoardCellState.Player1 ? BoardCellState.Player2 : BoardCellState.Player1);
+		state = newState;
+		animator.SetTrigger("Convert");
+		Debug.Log("Convert " + iPos + " " + jPos);
+	}
 
 	// trigger splitting animation
 	public void Split(BoardCell dest) {
@@ -103,11 +89,16 @@ public class BoardCell : MonoBehaviour {
 		dest.transform.rotation = transform.rotation;
 
 		animator.SetTrigger("Split");
+		Debug.Log("Split " + iPos + " " + jPos);
 	}
 
 	// unity triggers are weird
 	void PlayAnimation(string animationName){
 		if (!animator.GetCurrentAnimatorStateInfo(0).IsName(animationName))
 			animator.SetTrigger(animationName);
+
+		if (animationName != "Highlighted" && animationName != "Empty")
+			Debug.Log(animationName + " " + iPos + " " + jPos);
+		
 	}
 }
