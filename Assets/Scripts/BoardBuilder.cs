@@ -35,13 +35,13 @@ public class BoardBuilder : MonoBehaviour {
 		{0,0,0,1,1,1,2}
 	};*/
 	int[,] boardSetup = {
-		{1,1,2,0,0,},
+		{2,1,1,0,0,},
 		{1,1,1,1,0,},
+		{1,1,1,1,3,},
 		{1,1,1,1,1,},
-		{1,1,1,1,1,},
-		{1,1,1,1,1,},
+		{3,1,1,1,1,},
 		{0,1,1,1,1,},
-		{0,0,3,1,1,}
+		{0,0,1,1,2,}
 	};
 		/*int[,] boardSetup = {
 		{3,1,1,0,0},
@@ -154,7 +154,7 @@ public class BoardBuilder : MonoBehaviour {
 
 	public IEnumerator playerSelected(int i, int j) {
 		
-		//Debug.Log ("Player selected " + i + " " + j);
+		Debug.Log ("Player selected " + i + " " + j);
 		
 		// only moves to highlighted empty cells are valid
 		if (inputEnabled && board[i,j].getHighlighted() && board[i,j].isEmpty() && !pauseButton.getMenuVisible()) {
