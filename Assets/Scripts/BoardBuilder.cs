@@ -157,7 +157,7 @@ public class BoardBuilder : MonoBehaviour {
 		Debug.Log ("Player selected " + i + " " + j);
 		
 		// only moves to highlighted empty cells are valid
-		if (inputEnabled && board[i,j].getHighlighted() && board[i,j].isEmpty() && !pauseButton.getMenuVisible()) {
+		if (inputEnabled && board[i,j].getHighlighted() && board[i,j].isEmpty()) {
 		
 			//Debug.Log ("It is a valid move.");
 

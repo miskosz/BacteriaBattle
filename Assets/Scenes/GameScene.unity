@@ -253,7 +253,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b42f9df729c7e1d4ea982fccbc748f1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseButton: {fileID: 420647183}
 --- !u!1 &92787607
 GameObject:
   m_ObjectHideFlags: 0
@@ -509,6 +508,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f2e59582b9112b46bb5ef5f1da68772, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pauseMenu: {fileID: 1661190820}
 --- !u!61 &420647184
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -594,7 +594,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 637f0199800738f48ba7d8fb1fcc622c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseButton: {fileID: 420647183}
 --- !u!1 &1009192645
 GameObject:
   m_ObjectHideFlags: 0
@@ -719,7 +718,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f3a7f8cf9c34b04e97c222fdeb0d346, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseButton: {fileID: 420647183}
+  pauseMenu: {fileID: 1661190820}
 --- !u!1 &1335731870
 GameObject:
   m_ObjectHideFlags: 0
@@ -1008,7 +1007,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f682ea9572c64c84b9d5f512a2f7169c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseButton: {fileID: 420647183}
+  parentObject: {fileID: 0}
+  boardBuilder: {fileID: 31124282}
 --- !u!212 &1661190821
 SpriteRenderer:
   m_ObjectHideFlags: 0
