@@ -104,35 +104,19 @@ public class BoardBuilder : MonoBehaviour {
 		});
 
 		// initialize highlighted cells & stuff
-		nextTurn();
+		StartCoroutine(nextTurn());
 	}
 
-	void nextTurn() {
+	IEnumerator nextTurn() {
 		// switch player
 		playerOnTurn = 1 - playerOnTurn;
 
 		// fill closed areas
 		fillClosedAreas();
+		yield return StartCoroutine(GlobalAnimationTimer.WaitForAnimationEnd());
 
 		// set highlighted places
-		// iterate over board cells
-		bool hasMove = false;
-
-		forEachBoardCell((int i, int j) => {
-				
-			bool highlight = false;
-			if (board[i,j].isEmpty()) {
-				// iterate over cell neighbours
-				forEachCellNeighbour(i, j, (int ii, int jj) => {
-					if (board[ii,jj].getState() == playerState[playerOnTurn]) {
-						highlight = true;
-						hasMove = true;
-					}
-				});
-			}
-			board[i,j].setHighlighted(highlight, playerState[playerOnTurn]); 
-
-		});
+		bool hasMove = HighlightOn(playerState[playerOnTurn]);
 
 		updateScore();
 
@@ -152,8 +136,43 @@ public class BoardBuilder : MonoBehaviour {
 			audio.Play();
 
 		}
+
+		yield break;
 	}
 
+	// set highlighted cells
+	// returns if layer has move
+	bool HighlightOn(BoardCellState player) {
+		bool hasMove = false;
+		
+		forEachBoardCell((int i, int j) => {
+			
+			bool highlight = false;
+			if (board[i,j].isEmpty()) {
+				// iterate over cell neighbours
+				forEachCellNeighbour(i, j, (int ii, int jj) => {
+					if (board[ii,jj].getState() == player) {
+						highlight = true;
+						hasMove = true;
+					}
+				});
+			}
+			board[i,j].setHighlighted(highlight, player); 
+			
+		});
+
+		return hasMove;
+	}
+
+	void HighlightOff() {
+
+		forEachBoardCell((int i, int j) => {
+			if (board[i,j].getHighlighted()) {
+				board[i,j].setHighlighted(false, BoardCellState.Empty); 
+			}
+		});
+	}
+	
 	public IEnumerator playerSelected(int i, int j) {
 		
 		//Debug.Log ("Player selected " + i + " " + j);
@@ -164,6 +183,7 @@ public class BoardBuilder : MonoBehaviour {
 			//Debug.Log ("It is a valid move.");
 
 			disableInput();
+			HighlightOff();
 
 			// animate the originating cell
 			BoardCell origin = null;
@@ -177,9 +197,8 @@ public class BoardBuilder : MonoBehaviour {
 				// play dividing sound
 				audio.clip = divisionAudio;
 				audio.Play();
-
 				origin.Split(board[i,j]);
-				yield return new WaitForSeconds(splittingAnimDuration);
+				yield return StartCoroutine(GlobalAnimationTimer.WaitForAnimationEnd());
 			}
 
 			// new bacteria here, please!
@@ -191,10 +210,15 @@ public class BoardBuilder : MonoBehaviour {
 					board[ii,jj].Convert();
 				}
 			});
+			yield return StartCoroutine(GlobalAnimationTimer.WaitForAnimationEnd());
 
-			nextTurn();
+			yield return StartCoroutine(nextTurn());
+			yield return StartCoroutine(GlobalAnimationTimer.WaitForAnimationEnd());
+
 			enableInput();
 		}
+
+		yield break;
 	}
 
 	// score counting

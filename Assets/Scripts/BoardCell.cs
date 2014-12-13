@@ -18,7 +18,12 @@ public class BoardCell : MonoBehaviour {
 	// renderer & animator reference
 	Animator animator;
 	CellHighlight cellHighlight;
-			                      
+
+	// for getting animation length
+	public AnimationClip splitAnimationClip;
+	public AnimationClip convertAnimationClip;
+	public AnimationClip spawnAnimationClip;
+
 	// called from BoardCellController when creating the board
 	public void Initialize(BoardBuilder parent, int _iPos, int _jPos) {
 		boardBuilder = parent;
@@ -72,6 +77,7 @@ public class BoardCell : MonoBehaviour {
 				PlayAnimation("Player1_Spawn");
 			else if (state == BoardCellState.Player2)
 				PlayAnimation("Player2_Spawn");
+			GlobalAnimationTimer.AnimationTriggered(spawnAnimationClip);
 		}
 	}
 
@@ -81,19 +87,18 @@ public class BoardCell : MonoBehaviour {
 		BoardCellState newState = (state == BoardCellState.Player1 ? BoardCellState.Player2 : BoardCellState.Player1);
 		state = newState;
 		animator.SetTrigger("Convert");
-		Debug.Log("Convert " + iPos + " " + jPos);
+		GlobalAnimationTimer.AnimationTriggered(convertAnimationClip);
 	}
 
 	// trigger splitting animation
 	public void Split(BoardCell dest) {
-		// temporary
-		// try rotations
+		// rotate cell
 		Vector3 direction = dest.transform.position - transform.position;
 		transform.rotation = Quaternion.FromToRotation(Vector3.right, direction);
 		dest.transform.rotation = transform.rotation;
 
 		animator.SetTrigger("Split");
-		Debug.Log("Split " + iPos + " " + jPos);
+		GlobalAnimationTimer.AnimationTriggered(splitAnimationClip);
 	}
 
 	// unity triggers are weird
@@ -101,8 +106,8 @@ public class BoardCell : MonoBehaviour {
 		if (!animator.GetCurrentAnimatorStateInfo(0).IsName(animationName))
 			animator.SetTrigger(animationName);
 
-		if (animationName != "Highlighted" && animationName != "Empty")
-			Debug.Log(animationName + " " + iPos + " " + jPos);
+		//if (animationName != "Highlighted" && animationName != "Empty")
+		//	Debug.Log(animationName + " " + iPos + " " + jPos);
 		
 	}
 }
