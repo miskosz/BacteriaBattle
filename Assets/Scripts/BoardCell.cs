@@ -56,19 +56,23 @@ public class BoardCell : MonoBehaviour {
 
 
 	public void Appear(BoardCellState _state) {
-		state = _state;
-		if (state == BoardCellState.Player1)
-			PlayAnimation("Player1_Idle");
-		else if (state == BoardCellState.Player2)
-			PlayAnimation("Player2_Idle");
+		if (state != _state) {
+			state = _state;
+			if (state == BoardCellState.Player1)
+				PlayAnimation("Player1_Idle");
+			else if (state == BoardCellState.Player2)
+				PlayAnimation("Player2_Idle");
+		}
 	}
 
 	public void Spawn(BoardCellState _state) {
-		state = _state;
-		if (state == BoardCellState.Player1)
-			PlayAnimation("Player1_Spawn");
-		else if (state == BoardCellState.Player2)
-			PlayAnimation("Player2_Spawn");
+		if (state != _state) {
+			state = _state;
+			if (state == BoardCellState.Player1)
+				PlayAnimation("Player1_Spawn");
+			else if (state == BoardCellState.Player2)
+				PlayAnimation("Player2_Spawn");
+		}
 	}
 
 
