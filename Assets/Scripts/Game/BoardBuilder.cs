@@ -43,16 +43,12 @@ public class BoardBuilder : MonoBehaviour {
 		{0,1,1,3,2,},
 		{0,0,1,3,2,}
 	};
-		/*int[,] boardSetup = {
-		{3,1,1,0,0},
-		{1,1,1,1,0},
-		{1,1,1,1,2},
-		{0,1,1,1,1},
-		{1,1,1,1,1},
-		{1,1,1,1,0},
-		{2,1,1,1,1},
-		{0,1,1,1,1},
-		{0,0,1,1,3}
+	/*int[,] boardSetup = {
+		{2,0,0},
+		{1,1,0},
+		{1,1,1},
+		{0,1,1},
+		{0,0,3}
 	};*/
 
 	// game board
@@ -165,10 +161,9 @@ public class BoardBuilder : MonoBehaviour {
 	}
 
 	void HighlightOff() {
-
 		forEachBoardCell((int i, int j) => {
 			if (board[i,j].getHighlighted()) {
-				board[i,j].setHighlighted(false, BoardCellState.Empty); 
+				board[i,j].setHighlighted(false); 
 			}
 		});
 	}

@@ -5,8 +5,8 @@ public class BackButton : MonoBehaviour {
 	void OnMouseDown() {
 		Debug.Log("BackButton was pressed");
 		
-		Application.LoadLevel("Menu");
-		Debug.Log("Menu");
+		Application.LoadLevel("MainMenu");
+		Debug.Log("MainMenu");
 		
 	}
 }

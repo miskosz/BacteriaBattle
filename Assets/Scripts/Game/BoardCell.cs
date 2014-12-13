@@ -42,7 +42,7 @@ public class BoardCell : MonoBehaviour {
 
 	// interface for highlighting
 	public bool getHighlighted() { return cellHighlight.getHighlighted(); }
-	public void setHighlighted(bool highlighted, BoardCellState _state) {
+	public void setHighlighted(bool highlighted, BoardCellState _state = BoardCellState.Empty) {
 		cellHighlight.setHighlighted(highlighted, _state);
 	}
 
