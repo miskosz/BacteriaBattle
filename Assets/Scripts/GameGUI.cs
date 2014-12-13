@@ -16,7 +16,7 @@ public class GameGUI : MonoBehaviour {
 
 		player1SpriteTransform = transform.FindChild("Player1ScoreSprite");
 		player2SpriteTransform = transform.FindChild("Player2ScoreSprite");
-		scoreBox = transform.FindChild("ScoreBox");
+		scoreBox = player2SpriteTransform.FindChild("ScoreBox");
 
 		Vector3 tmp;
 		tmp = Camera.main.ScreenToWorldPoint(new Vector3 (0, Screen.height, 0));
