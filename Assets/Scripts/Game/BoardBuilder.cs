@@ -13,7 +13,7 @@ public class BoardBuilder : MonoBehaviour {
 	public AudioClip divisionAudio;
 	public AudioClip gameOverAudio;
 
-	public PauseButton pauseButton;
+	public PauseMenu pauseMenu;
 
 	int[] scoreCount = {0, 0};
 
@@ -131,6 +131,8 @@ public class BoardBuilder : MonoBehaviour {
 			audio.clip = gameOverAudio;
 			audio.Play();
 
+			// show pause menu
+			pauseMenu.Toggle();
 		}
 
 		yield break;

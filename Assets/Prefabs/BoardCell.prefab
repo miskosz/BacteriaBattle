@@ -61,8 +61,9 @@ GameObject:
   - 4: {fileID: 400006}
   - 95: {fileID: 9500000}
   - 212: {fileID: 21200000}
+  - 114: {fileID: 11400006}
   m_Layer: 0
-  m_Name: CellAnimation
+  m_Name: CellAnimator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -156,6 +157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dae5ff38259b4acabc17dec4ec99bf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cellAnim: {fileID: 0}
   splitAnimationClip: {fileID: 7400000, guid: e01a130c077944c02bf5be14b59796cf, type: 2}
   convertAnimationClip: {fileID: 7400000, guid: f6b8baf9620544572b14608fe6bcfd96,
     type: 2}
@@ -184,6 +186,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player1Tint: {r: .602941155, g: .950709939, b: 1, a: 1}
   Player2Tint: {r: 1, g: .698529422, b: .991080761, a: 1}
+--- !u!114 &11400006
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bcaa1bfb990a4aa39d485b37eeb4332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

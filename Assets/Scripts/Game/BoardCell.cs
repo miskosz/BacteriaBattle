@@ -15,9 +15,12 @@ public class BoardCell : MonoBehaviour {
 	// board builder
 	BoardBuilder boardBuilder;
 
-	// renderer & animator reference
+	// children references
+	[HideInInspector]
+	public CellAnimator cellAnim;
 	Animator animator;
 	CellHighlight cellHighlight;
+	CellBackground cellBackground;
 
 	// for getting animation length
 	public AnimationClip splitAnimationClip;
@@ -31,8 +34,13 @@ public class BoardCell : MonoBehaviour {
 		jPos = _jPos;
 		state = BoardCellState.Empty;
 
-		animator = gameObject.GetComponentInChildren<Animator>();
+		cellAnim = gameObject.GetComponentInChildren<CellAnimator>();
+		animator = cellAnim.GetComponent<Animator>();
+
 		cellHighlight = gameObject.GetComponentInChildren<CellHighlight>();
+
+		cellBackground = gameObject.GetComponentInChildren<CellBackground>();
+		cellBackground.Init(iPos, jPos);
 	}
 
     void OnMouseDown() {
@@ -94,8 +102,10 @@ public class BoardCell : MonoBehaviour {
 	public void Split(BoardCell dest) {
 		// rotate cell
 		Vector3 direction = dest.transform.position - transform.position;
-		transform.rotation = Quaternion.FromToRotation(Vector3.right, direction);
-		dest.transform.rotation = transform.rotation;
+		Quaternion rotation = Quaternion.FromToRotation(Vector3.right, direction);
+
+		cellAnim.transform.rotation = rotation;
+		dest.cellAnim.transform.rotation = rotation;
 
 		animator.SetTrigger("Split");
 		GlobalAnimationTimer.AnimationTriggered(splitAnimationClip);
