@@ -41,6 +41,16 @@ public class GameGUI : MonoBehaviour {
 		GUIUtility.RotateAroundPivot(-180, new Vector2(0,0));
 		GUI.Label(new Rect(boxOrigin.x-Screen.width, boxOrigin.y-Screen.height, boxSize.x, boxSize.y),
 		          boardBuilder.getScore(BoardCellState.Player1).ToString(), myStyle);
+
+		// draw winner and loser
+		if (boardBuilder.getGameOver()) {
+			if (boardBuilder.getScore(BoardCellState.Player1) > boardBuilder.getScore(BoardCellState.Player2)) {
+
+			}
+			else {
+
+			}
+		}
 	}
 
 	// Unity is super stupid about coordinate spaces

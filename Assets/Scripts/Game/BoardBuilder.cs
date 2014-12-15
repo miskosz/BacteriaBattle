@@ -18,7 +18,8 @@ public class BoardBuilder : MonoBehaviour {
 	int[] scoreCount = {0, 0};
 
 	bool inputEnabled = true;
-	
+
+	bool gameOver;
 
 	// initial board setup
 	// 0 - out of board
@@ -59,6 +60,8 @@ public class BoardBuilder : MonoBehaviour {
 	BoardCellState[] playerState = {BoardCellState.Player1, BoardCellState.Player2};
 
 	void Start () {
+		// new game
+		gameOver = true;
 
 		// compute layout vectors
 		// i - rows, j - columns
@@ -133,6 +136,10 @@ public class BoardBuilder : MonoBehaviour {
 
 			// show pause menu
 			pauseMenu.Toggle();
+
+			// for showing winner/loser
+			gameOver = true;
+
 		}
 
 		yield break;
@@ -234,6 +241,10 @@ public class BoardBuilder : MonoBehaviour {
 		return scoreCount[(int)player];
 	}
 
+	public bool getGameOver() {
+		return gameOver;
+	}
+
 	public void disableInput() {
 		inputEnabled = false;
 	}
@@ -250,6 +261,7 @@ public class BoardBuilder : MonoBehaviour {
 		}
 		public int i, j;
 	};
+
 
 	// Let us say that an area of empty is WEAKLY CONNECTED if cells are
 	// separated by at most one bacteria. A weakly connected area should
