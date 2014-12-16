@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class BoardBuilder : MonoBehaviour {
 
+	public bool playerVsAI = false;
+
 	public GameObject boardCellPrefab;
 	public float cellDistance = 1;
 
@@ -35,7 +37,7 @@ public class BoardBuilder : MonoBehaviour {
 		{0,0,1,1,1,1,1},
 		{0,0,0,1,1,1,2}
 	};*/
-	int[,] boardSetup = {
+	/*int[,] boardSetup = {
 		{2,1,1,0,0,},
 		{1,1,1,1,0,},
 		{1,1,1,1,3,},
@@ -43,6 +45,15 @@ public class BoardBuilder : MonoBehaviour {
 		{3,1,2,2,1,},
 		{0,1,1,3,2,},
 		{0,0,1,3,2,}
+	};*/
+	int[,] boardSetup = {
+		{2,1,1,0,0,},
+		{1,1,1,1,0,},
+		{1,1,1,1,3,},
+		{1,1,1,1,1,},
+		{3,1,1,1,1,},
+		{0,1,1,1,1,},
+		{0,0,1,1,2,}
 	};
 	/*int[,] boardSetup = {
 		{2,0,0},
@@ -221,6 +232,14 @@ public class BoardBuilder : MonoBehaviour {
 			yield return StartCoroutine(GlobalAnimationTimer.WaitForAnimationEnd());
 
 			enableInput();
+
+			if (playerVsAI && playerOnTurn == 0) {
+				//disableInput(); TODO!!!!!
+				StartCoroutine(MakeAIMove());
+			}
+			//else {
+			//	enableInput();
+			//}
 		}
 
 		yield break;
@@ -236,6 +255,30 @@ public class BoardBuilder : MonoBehaviour {
 		});
 		
 		scoreCount = tempScore;
+	}
+
+	IEnumerator MakeAIMove() {
+		Debug.Log("MakeAIMove");
+
+		disableInput(); // TODO
+		yield return new WaitForSeconds(0.5f);
+
+		List<IntPair> possibleMoves = new List<IntPair>();
+
+		forEachBoardCell((int i, int j) => {
+			if (board[i,j].getHighlighted())
+				possibleMoves.Add(new IntPair(i,j));
+		});
+
+		if (possibleMoves.Count > 0) {
+			int r = Random.Range(0, possibleMoves.Count);
+			enableInput(); // TODO
+			StartCoroutine(playerSelected(possibleMoves[r].i, possibleMoves[r].j));
+
+			Debug.Log("MakeAIMove " + possibleMoves[r].i + " " + possibleMoves[r].j);
+		}
+
+		yield break;
 	}
 
 	public int getScore(BoardCellState player) {

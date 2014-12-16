@@ -102,6 +102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ef9b6c083de748888bcfdbaf5eadabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerVsAI: 1
   boardCellPrefab: {fileID: 100000, guid: f0f06b6a9995949c28b3e8c2dc9e2ef8, type: 2}
   cellDistance: 1
   splittingAnimDuration: .5
