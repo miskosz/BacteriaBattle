@@ -55,8 +55,8 @@ public class BoardBuilder : MonoBehaviour {
 	// game board
 	BoardCell[,] board;
 
-	// whose turn is it (0 or 1), switched after start
-	public int playerOnTurn = 0; // TODO: make safe maybe
+	// whose turn is it (0 or 1)
+	int playerOnTurn;
 	BoardCellState[] playerState = {BoardCellState.Player1, BoardCellState.Player2};
 
 	void Start () {
@@ -103,6 +103,7 @@ public class BoardBuilder : MonoBehaviour {
 		});
 
 		// initialize highlighted cells & stuff
+		playerOnTurn = 1 - GlobalState.GetStartingPlayer();
 		StartCoroutine(nextTurn());
 	}
 
