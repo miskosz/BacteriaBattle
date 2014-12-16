@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+static class GlobalTest {
+	public static int counter = 0;
+}
+
 static class GlobalAnimationTimer {
 
 	static float animationEnd;

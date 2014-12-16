@@ -110,7 +110,7 @@ PlayerSettings:
   m_BuildTargetIcons:
   - m_BuildTarget: 
     m_Icons:
-    - m_Icon: {fileID: 2800000, guid: ab64fded90a84494a90afa1e7591ed84, type: 3}
+    - m_Icon: {fileID: 2800000, guid: 0782aced679854a119624c18571c699a, type: 3}
       m_Size: 128
   m_BuildTargetBatching:
   - m_BuildTarget: iPhone
