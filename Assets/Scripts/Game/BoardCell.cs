@@ -27,6 +27,10 @@ public class BoardCell : MonoBehaviour {
 	public AnimationClip convertAnimationClip;
 	public AnimationClip spawnAnimationClip;
 
+	public AudioClip popAudio;
+	public AudioClip spawnAudio;
+
+	
 	// called from BoardCellController when creating the board
 	public void Initialize(BoardBuilder parent, int _iPos, int _jPos) {
 		boardBuilder = parent;
@@ -83,6 +87,10 @@ public class BoardCell : MonoBehaviour {
 			animator.SetInteger("Player", playerId[(int)state]);
 			PlayAnimation("Spawn");
 			GlobalAnimationTimer.AnimationTriggered(spawnAnimationClip);
+
+			// play audio
+			audio.clip = spawnAudio;
+			audio.Play();
 		}
 	}
 
@@ -94,8 +102,12 @@ public class BoardCell : MonoBehaviour {
 		animator.SetInteger("Player", playerId[(int)state]);
 		PlayAnimation("Convert");
 		GlobalAnimationTimer.AnimationTriggered(convertAnimationClip);
-	}
 
+		// play audio
+		audio.clip = popAudio;
+		audio.Play();
+	}
+	
 	// trigger splitting animation
 	public void Split(BoardCell dest) {
 		// rotate cell
