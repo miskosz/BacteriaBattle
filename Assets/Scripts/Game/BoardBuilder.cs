@@ -72,7 +72,7 @@ public class BoardBuilder : MonoBehaviour {
 
 	void Start () {
 		// new game
-		gameOver = true;
+		gameOver = false;
 
 		// compute layout vectors
 		// i - rows, j - columns
