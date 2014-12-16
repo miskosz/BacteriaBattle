@@ -67,10 +67,12 @@ public class BoardCell : MonoBehaviour {
 	///
 	//////////////////////////////////////////////////////////
 
+	int[] playerId = {1,2};
 
 	public void Appear(BoardCellState _state) {
 		if (state != _state) {
 			state = _state;
+			animator.SetInteger("Player", playerId[(int)state]);
 			if (state == BoardCellState.Player1)
 				PlayAnimation("Player1_Idle");
 			else if (state == BoardCellState.Player2)
@@ -81,6 +83,7 @@ public class BoardCell : MonoBehaviour {
 	public void Spawn(BoardCellState _state) {
 		if (state != _state) {
 			state = _state;
+			animator.SetInteger("Player", playerId[(int)state]);
 			if (state == BoardCellState.Player1)
 				PlayAnimation("Player1_Spawn");
 			else if (state == BoardCellState.Player2)
@@ -94,6 +97,7 @@ public class BoardCell : MonoBehaviour {
 	public void Convert() {
 		BoardCellState newState = (state == BoardCellState.Player1 ? BoardCellState.Player2 : BoardCellState.Player1);
 		state = newState;
+		animator.SetInteger("Player", playerId[(int)state]);
 		animator.SetTrigger("Convert");
 		GlobalAnimationTimer.AnimationTriggered(convertAnimationClip);
 	}
