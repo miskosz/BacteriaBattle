@@ -73,10 +73,7 @@ public class BoardCell : MonoBehaviour {
 		if (state != _state) {
 			state = _state;
 			animator.SetInteger("Player", playerId[(int)state]);
-			if (state == BoardCellState.Player1)
-				PlayAnimation("Player1_Idle");
-			else if (state == BoardCellState.Player2)
-				PlayAnimation("Player2_Idle");
+			PlayAnimation("Idle");
 		}
 	}
 
@@ -84,10 +81,7 @@ public class BoardCell : MonoBehaviour {
 		if (state != _state) {
 			state = _state;
 			animator.SetInteger("Player", playerId[(int)state]);
-			if (state == BoardCellState.Player1)
-				PlayAnimation("Player1_Spawn");
-			else if (state == BoardCellState.Player2)
-				PlayAnimation("Player2_Spawn");
+			PlayAnimation("Spawn");
 			GlobalAnimationTimer.AnimationTriggered(spawnAnimationClip);
 		}
 	}
@@ -98,7 +92,7 @@ public class BoardCell : MonoBehaviour {
 		BoardCellState newState = (state == BoardCellState.Player1 ? BoardCellState.Player2 : BoardCellState.Player1);
 		state = newState;
 		animator.SetInteger("Player", playerId[(int)state]);
-		animator.SetTrigger("Convert");
+		PlayAnimation("Convert");
 		GlobalAnimationTimer.AnimationTriggered(convertAnimationClip);
 	}
 
@@ -111,17 +105,15 @@ public class BoardCell : MonoBehaviour {
 		cellAnim.transform.rotation = rotation;
 		dest.cellAnim.transform.rotation = rotation;
 
-		animator.SetTrigger("Split");
+		PlayAnimation("Split");
 		GlobalAnimationTimer.AnimationTriggered(splitAnimationClip);
 	}
 
 	// unity triggers are weird
 	void PlayAnimation(string animationName){
-		if (!animator.GetCurrentAnimatorStateInfo(0).IsName(animationName))
+		if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Player1_"+animationName) &&
+		    !animator.GetCurrentAnimatorStateInfo(0).IsName("Player2_"+animationName) ) {
 			animator.SetTrigger(animationName);
-
-		//if (animationName != "Highlighted" && animationName != "Empty")
-		//	Debug.Log(animationName + " " + iPos + " " + jPos);
-		
+		}
 	}
 }
