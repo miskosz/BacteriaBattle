@@ -1,19 +1,19 @@
 fileFormatVersion: 2
-guid: d693a2fad4f674c349cf371dae7b1dff
+guid: 4d4cd7c4a6e0f4eaa97e794ef8a98f05
 TextureImporter:
   fileIDToRecycleName:
-    21300000: bact_lila_split_spritesheet_0
-    21300002: bact_lila_split_spritesheet_1
-    21300004: bact_lila_split_spritesheet_2
-    21300006: bact_lila_split_spritesheet_3
-    21300008: bact_lila_split_spritesheet_4
-    21300010: bact_lila_split_spritesheet_5
-    21300012: bact_lila_split_spritesheet_6
-    21300014: bact_lila_split_spritesheet_7
-    21300016: bact_lila_split_spritesheet_8
-    21300018: bact_lila_split_spritesheet_9
-    21300020: bact_lila_split_spritesheet_10
-    21300022: bact_lila_split_spritesheet_11
+    21300000: bact_lila_split_mirror_spritesheet_0
+    21300002: bact_lila_split_mirror_spritesheet_1
+    21300004: bact_lila_split_mirror_spritesheet_2
+    21300006: bact_lila_split_mirror_spritesheet_3
+    21300008: bact_lila_split_mirror_spritesheet_4
+    21300010: bact_lila_split_mirror_spritesheet_5
+    21300012: bact_lila_split_mirror_spritesheet_6
+    21300014: bact_lila_split_mirror_spritesheet_7
+    21300016: bact_lila_split_mirror_spritesheet_8
+    21300018: bact_lila_split_mirror_spritesheet_9
+    21300020: bact_lila_split_mirror_spritesheet_10
+    21300022: bact_lila_split_mirror_spritesheet_11
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     filterMode: -1
-    aniso: 1
+    aniso: 16
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
@@ -55,7 +55,7 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: bact_lila_split_spritesheet_0
+    - name: bact_lila_split_mirror_spritesheet_0
       rect:
         serializedVersion: 2
         x: 0
@@ -65,7 +65,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: bact_lila_split_spritesheet_1
+    - name: bact_lila_split_mirror_spritesheet_1
       rect:
         serializedVersion: 2
         x: 300
@@ -75,7 +75,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: bact_lila_split_spritesheet_2
+    - name: bact_lila_split_mirror_spritesheet_2
       rect:
         serializedVersion: 2
         x: 600
@@ -85,7 +85,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: bact_lila_split_spritesheet_3
+    - name: bact_lila_split_mirror_spritesheet_3
       rect:
         serializedVersion: 2
         x: 900
@@ -95,7 +95,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: bact_lila_split_spritesheet_4
+    - name: bact_lila_split_mirror_spritesheet_4
       rect:
         serializedVersion: 2
         x: 0
@@ -105,7 +105,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: bact_lila_split_spritesheet_5
+    - name: bact_lila_split_mirror_spritesheet_5
       rect:
         serializedVersion: 2
         x: 300
@@ -115,7 +115,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: bact_lila_split_spritesheet_6
+    - name: bact_lila_split_mirror_spritesheet_6
       rect:
         serializedVersion: 2
         x: 600
@@ -125,7 +125,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: bact_lila_split_spritesheet_7
+    - name: bact_lila_split_mirror_spritesheet_7
       rect:
         serializedVersion: 2
         x: 900
@@ -135,7 +135,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: bact_lila_split_spritesheet_8
+    - name: bact_lila_split_mirror_spritesheet_8
       rect:
         serializedVersion: 2
         x: 0
@@ -145,7 +145,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: bact_lila_split_spritesheet_9
+    - name: bact_lila_split_mirror_spritesheet_9
       rect:
         serializedVersion: 2
         x: 300
@@ -155,7 +155,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: bact_lila_split_spritesheet_10
+    - name: bact_lila_split_mirror_spritesheet_10
       rect:
         serializedVersion: 2
         x: 600
@@ -165,7 +165,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: bact_lila_split_spritesheet_11
+    - name: bact_lila_split_mirror_spritesheet_11
       rect:
         serializedVersion: 2
         x: 900

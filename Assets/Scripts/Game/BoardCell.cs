@@ -112,7 +112,10 @@ public class BoardCell : MonoBehaviour {
 	public void Split(BoardCell dest) {
 		// rotate cell
 		Vector3 direction = dest.transform.position - transform.position;
+		// mirrored spritesheet hack
+		if (state == BoardCellState.Player2) direction *= -1;
 		Quaternion rotation = Quaternion.FromToRotation(Vector3.right, direction);
+
 
 		cellAnim.transform.rotation = rotation;
 		dest.cellAnim.transform.rotation = rotation;

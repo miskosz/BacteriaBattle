@@ -19,7 +19,7 @@ public class BoardBuilder : MonoBehaviour {
 
 	int[] scoreCount = {0, 0};
 
-	bool inputEnabled = true;
+	bool inputEnabled = false;
 
 	bool gameOver;
 
@@ -154,6 +154,14 @@ public class BoardBuilder : MonoBehaviour {
 
 		}
 
+		if (playerVsAI && playerOnTurn == 0) {
+			//disableInput(); TODO!!!!!
+			StartCoroutine(MakeAIMove());
+		}
+		else {
+			enableInput();
+		}
+
 		yield break;
 	}
 
@@ -229,14 +237,7 @@ public class BoardBuilder : MonoBehaviour {
 			yield return StartCoroutine(GlobalAnimationTimer.WaitForAnimationEnd());
 
 			yield return StartCoroutine(nextTurn());
-			yield return StartCoroutine(GlobalAnimationTimer.WaitForAnimationEnd());
 
-			enableInput();
-
-			if (playerVsAI && playerOnTurn == 0) {
-				//disableInput(); TODO!!!!!
-				StartCoroutine(MakeAIMove());
-			}
 			//else {
 			//	enableInput();
 			//}
