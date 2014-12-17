@@ -4,6 +4,7 @@ using System.Collections;
 public class MusicManagerSingleton:MonoBehaviour {
 
 	private static MusicManagerSingleton instance = null;
+	AudioClip clip;
 	public static MusicManagerSingleton Instance {
 		get { 
 			return instance;
@@ -33,10 +34,15 @@ public class MusicManagerSingleton:MonoBehaviour {
 		}
 	}
 			
-	public static void musicOff(AudioSource music){
-
+	public void musicOff(){
+		Debug.Log ("musicOff was pressed");
+		this.audio.Stop ();
 	}
 
+	public void musicOn(AudioClip clip, bool loopping){
+		Debug.Log ("musicOn was pressed");
+		this.play (clip, loopping);
+	}
 	public static void soundsOff(AudioSource music){
 
 	}

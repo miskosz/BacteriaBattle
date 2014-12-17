@@ -704,7 +704,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33319b3c5414c4a59b0be8743ac8b976, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicOn: 0
+  musicOn: 1
+  musicClip: {fileID: 0}
 --- !u!1 &1803898244
 GameObject:
   m_ObjectHideFlags: 0
@@ -714,7 +715,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 1803898246}
   - 212: {fileID: 1803898245}
-  - 114: {fileID: 1803898247}
   m_Layer: 0
   m_Name: btn_on
   m_TagString: Untagged
@@ -756,17 +756,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
---- !u!114 &1803898247
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1803898244}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ceea3bd3cb9a483993ca695a7de3355, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1841242645
 GameObject:
   m_ObjectHideFlags: 0

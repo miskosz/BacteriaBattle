@@ -3,17 +3,21 @@ using System.Collections;
 
 public class MenuManager : MonoBehaviour {
 
-	public bool musicOn = true;
-
+	public bool musicOn;
+	public AudioClip musicClip;
 
 	public void ToggleMusic() {
-				musicOn = !musicOn;
+				
 		Debug.Log ("Music boolean: "+musicOn);
-				if (musicOn == false) {
-						//MusicManagerSingleton.musicOff ();
-				} else {
-						//MusicManagerSingleton.musicOn ();
-				}
+		if (musicOn == true) {
+			MusicManagerSingleton.Instance.musicOff ();
+			Debug.Log ("Music boolean: "+musicOn);
+			musicOn =!musicOn;
+		} else {
+			Debug.Log ("Music boolean in ELSE: "+musicOn);
+			musicOn =!musicOn;	
+			MusicManagerSingleton.Instance.play(musicClip, true);
+		}
 		}
 
 
