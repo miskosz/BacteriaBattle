@@ -75,6 +75,7 @@ public class MusicManagerSingleton:MonoBehaviour {
 	public static void switchMusicToGameMusic(){
 		Debug.Log ("MusicManagerSingleton.play()");
 		MusicManagerSingleton.Instance.audio.Stop();
+		Destroy (MusicManagerSingleton.Instance.gameObject);
 
 		//Shoud get AudioClips working somehow or destroy the old AudioSource first
 		//MusicManagerSingleton.Instance.audio.Play();
