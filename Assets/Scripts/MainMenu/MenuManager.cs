@@ -3,7 +3,7 @@ using System.Collections;
 
 public class MenuManager : MonoBehaviour {
 
-	public bool musicOn;
+	public bool musicOn=true;
 	public AudioClip musicClip;
 
 	public void ToggleMusic() {

@@ -705,7 +705,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   musicOn: 1
-  musicClip: {fileID: 0}
+  musicClip: {fileID: 8300000, guid: 149202f05e0d84de0b3def653516336a, type: 3}
 --- !u!1 &1803898244
 GameObject:
   m_ObjectHideFlags: 0
