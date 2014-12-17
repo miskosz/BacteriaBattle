@@ -48,8 +48,8 @@ public class GameGUI : MonoBehaviour {
 
 			winnerLoser.setVisible();
 
-			if (boardBuilder.getScore(BoardCellState.Player1) > boardBuilder.getScore(BoardCellState.Player2)) {
-				//winnerLoser.spin();
+			if (boardBuilder.getScore(BoardCellState.Player1) < boardBuilder.getScore(BoardCellState.Player2)) {
+				winnerLoser.spin();
 			}
 			else {
 

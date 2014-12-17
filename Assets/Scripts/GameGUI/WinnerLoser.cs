@@ -6,20 +6,28 @@ public class WinnerLoser : MonoBehaviour {
 	Vector3 winnerPosition;
 	Vector3 loserPosition;
 
+	Transform winner, loser;
 
+	bool spinned;
 	// Use this for initialization
 	void Start () {
 
-		//winnerPosition = new Vector3 (30, Screen.width / 2, 10);
-		//loserPosition = new Vector3 (Screen.height-30, Screen.width / 2, 10);
+		spinned = false;
+
+		winner = transform.FindChild("WinnerAnimation");
+		loser = transform.FindChild("LoserAnimation");
+
+		Vector3 tmp;
+
+		tmp = winner.renderer.bounds.center;
+		winnerPosition = new Vector3 (tmp.x, tmp.y, 10);
+
+		tmp = loser.renderer.bounds.center;
+		loserPosition = new Vector3 (tmp.x, tmp.y, 10);
+
 		setHidden();
 		//spin ();
 
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
 	}
 
 	public void setVisible() {
@@ -36,12 +44,20 @@ public class WinnerLoser : MonoBehaviour {
 	
 
 	public void spin() {
-		foreach (Transform child in transform) {
-
-			child.transform.Rotate(new Vector3(0,0,1), 180);
 
 
-		}
+			if (!spinned) {
+				winner.Rotate(new Vector3(0,0,1), 180);
+				loser.Rotate(new Vector3(0,0,1), 180);
+				
+				winner.position = loserPosition;
+				loser.position = winnerPosition;
+				
+
+				spinned = !spinned;
+			}
+
+
 
 	}
 }
