@@ -7,8 +7,9 @@ public class MenuManager : MonoBehaviour {
 	public AudioClip musicClip;
 
 	public void ToggleMusic() {
-				
-		Debug.Log ("Music boolean: "+musicOn);
+		MusicManagerSingleton.Instance.toggleMusic ();
+
+		/*Debug.Log ("Music boolean: "+musicOn);
 		if (musicOn == true) {
 			MusicManagerSingleton.Instance.musicOff ();
 			Debug.Log ("Music boolean: "+musicOn);
@@ -17,7 +18,9 @@ public class MenuManager : MonoBehaviour {
 			Debug.Log ("Music boolean in ELSE: "+musicOn);
 			musicOn =!musicOn;	
 			MusicManagerSingleton.Instance.play(musicClip, true);
-		}
+		}*/
+
+
 		}
 
 

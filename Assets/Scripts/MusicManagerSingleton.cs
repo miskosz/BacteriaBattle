@@ -4,6 +4,7 @@ using System.Collections;
 public class MusicManagerSingleton:MonoBehaviour {
 
 	private static MusicManagerSingleton instance = null;
+	private bool isMusicOn=true;
 	AudioClip clip;
 	public static MusicManagerSingleton Instance {
 		get { 
@@ -26,6 +27,7 @@ public class MusicManagerSingleton:MonoBehaviour {
 		
 	public void play(AudioClip clip, bool loop = false){
 		Debug.Log ("MusicManagerSingleton.play()");
+
 		if (audio.clip != clip) {
 			audio.Stop();
 			audio.clip = clip;
@@ -33,16 +35,22 @@ public class MusicManagerSingleton:MonoBehaviour {
 			audio.Play();
 		}
 	}
-			
-	public void musicOff(){
-		Debug.Log ("musicOff was pressed");
-		this.audio.Stop ();
-	}
 
-	public void musicOn(AudioClip clip, bool loopping){
-		Debug.Log ("musicOn was pressed");
-		this.play (clip, loopping);
+	// Options page is buggy. In some cases the music button is just the opposite than the real state is
+	// I think that scene jumping causes this because Unity reads scene again and the default state in Toggle button in music on.
+	public void toggleMusic(){
+		Debug.Log ("toggleMusic");
+		isMusicOn = !isMusicOn;
+		if (isMusicOn == true) {
+			audio.Play();	
+		}
+		if (isMusicOn == false) {
+			audio.Stop();
+		}
+
 	}
+			
+
 	public static void soundsOff(AudioSource music){
 
 	}
