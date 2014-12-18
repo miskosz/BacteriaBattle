@@ -17,10 +17,14 @@ public class MenuManager : MonoBehaviour {
 	}
 
 	public void ToggleMusic() {
-		MusicManagerSingleton.Instance.toggleMusic ();
-		//toggle.isOn = MusicManagerSingleton.Instance.musicOn ();
-		Debug.Log ("1. AFTER TOGGLING MenuManager musicOn in ToggleMusic()--->" +toggle.isOn);
-		Debug.Log ("2. AFTER TOGGLING MenuManager musicOn in ToggleMusic()--->" +MusicManagerSingleton.Instance.musicOn ());
+
+		if (toggle.isOn != MusicManagerSingleton.Instance.musicOn()) {
+			MusicManagerSingleton.Instance.toggleMusic ();
+			//toggle.isOn = MusicManagerSingleton.Instance.musicOn ();
+			Debug.Log ("1. AFTER TOGGLING MenuManager musicOn in ToggleMusic()--->" +toggle.isOn);
+			Debug.Log ("2. AFTER TOGGLING MenuManager musicOn in ToggleMusic()--->" +MusicManagerSingleton.Instance.musicOn ());
+		} 
+
 	}
 
 }
