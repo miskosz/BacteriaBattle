@@ -4,7 +4,6 @@ using System.Collections;
 public class GameGUI : MonoBehaviour {
 
 	public BoardBuilder boardBuilder;
-	public WinnerLoser winnerLoser;
 	public GUIStyle myStyle;
 
 	Transform player1SpriteTransform, player2SpriteTransform;
@@ -43,18 +42,6 @@ public class GameGUI : MonoBehaviour {
 		GUI.Label(new Rect(boxOrigin.x-Screen.width, boxOrigin.y-Screen.height, boxSize.x, boxSize.y),
 		          boardBuilder.getScore(BoardCellState.Player1).ToString(), myStyle);
 
-		// draw winner and loser
-		if (boardBuilder.getGameOver()) {
-
-			winnerLoser.setVisible();
-
-			if (boardBuilder.getScore(BoardCellState.Player1) < boardBuilder.getScore(BoardCellState.Player2)) {
-				winnerLoser.spin();
-			}
-			else {
-
-			}
-		}
 	}
 
 	// Unity is super stupid about coordinate spaces

@@ -6,15 +6,15 @@ public class BoardChooser : MonoBehaviour {
 	[SerializeField]
 	public Sprite[] boardSprites = new Sprite[3];
 	
-	SpriteRenderer renderer;
+	SpriteRenderer spriteRenderer;
 	
 	void Start () {
-		renderer = gameObject.GetComponent<SpriteRenderer>();
-		renderer.sprite = boardSprites[GlobalState.board];
+		spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+		spriteRenderer.sprite = boardSprites[GlobalState.board];
 	}
 	
 	void OnMouseDown() {
 		GlobalState.board = (GlobalState.board + 1) % 3;
-		renderer.sprite = boardSprites[GlobalState.board];
+		spriteRenderer.sprite = boardSprites[GlobalState.board];
 	}
 }

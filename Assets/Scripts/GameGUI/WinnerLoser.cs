@@ -38,7 +38,6 @@ public class WinnerLoser : MonoBehaviour {
 		foreach (Animator a in gameObject.GetComponentsInChildren<Animator>())
 			a.enabled = true;
 
-
 	}
 
 	public void setHidden() {

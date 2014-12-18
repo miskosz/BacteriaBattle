@@ -109,6 +109,7 @@ MonoBehaviour:
   divisionAudio: {fileID: 8300000, guid: 4f371ab7eac5a444898ca40a6fe09ca5, type: 3}
   gameOverAudio: {fileID: 8300000, guid: bc499e38f68ba4df2ac3da75c7bd3d86, type: 3}
   pauseMenu: {fileID: 1661190820}
+  winnerLoser: {fileID: 212854584}
 --- !u!4 &31124283
 Transform:
   m_ObjectHideFlags: 0
@@ -719,7 +720,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boardBuilder: {fileID: 31124282}
-  winnerLoser: {fileID: 212854584}
   myStyle:
     m_Name: 
     m_Normal:

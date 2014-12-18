@@ -16,12 +16,11 @@ public class BoardBuilder : MonoBehaviour {
 	public AudioClip gameOverAudio;
 
 	public PauseMenu pauseMenu;
+	public WinnerLoser winnerLoser;
 
 	int[] scoreCount = {0, 0};
 
 	bool inputEnabled = false;
-
-	bool gameOver;
 
 	// initial board setup
 	// 0 - out of board
@@ -32,11 +31,11 @@ public class BoardBuilder : MonoBehaviour {
 	int[,] board0 = {
 		{2,1,1,0,0,},
 		{1,1,1,1,0,},
-		{1,1,1,1,3,},
-		{1,1,1,1,1,},
-		{3,1,1,1,1,},
-		{0,1,1,1,1,},
-		{0,0,1,1,2,}
+		{1,1,1,1,3,}//,
+//		{1,1,1,1,1,},
+//		{3,1,1,1,1,},
+//		{0,1,1,1,1,},
+//		{0,0,1,1,2,}
 	};
 	int[,] board1 = {
 		{0,1,1,0,0,0,0},
@@ -67,8 +66,6 @@ public class BoardBuilder : MonoBehaviour {
 	BoardCellState[] playerState = {BoardCellState.Player1, BoardCellState.Player2};
 
 	void Start () {
-		// new game
-		gameOver = false;
 
 		// apply settings
 		switch (GlobalState.gameMode) {
@@ -158,12 +155,14 @@ public class BoardBuilder : MonoBehaviour {
 				audio.Play();
 			}
 
+			// draw winner and loser
+			if (scoreCount[0] < scoreCount[1])
+				winnerLoser.spin();
+			winnerLoser.setVisible();
+			yield return new WaitForSeconds(0.5f);
+
 			// show pause menu
 			pauseMenu.Toggle();
-
-			// for showing winner/loser
-			gameOver = true;
-
 		}
 
 		if (playerVsAI && playerOnTurn == 0) {
@@ -297,10 +296,6 @@ public class BoardBuilder : MonoBehaviour {
 
 	public int getScore(BoardCellState player) {
 		return scoreCount[(int)player];
-	}
-
-	public bool getGameOver() {
-		return gameOver;
 	}
 
 	public void disableInput() {

@@ -6,15 +6,15 @@ public class ModeChooser : MonoBehaviour {
 	[SerializeField]
 	public Sprite[] modeSprites = new Sprite[2];
 
-	SpriteRenderer renderer;
+	SpriteRenderer spriteRenderer;
 
 	void Start () {
-		renderer = gameObject.GetComponent<SpriteRenderer>();
-		renderer.sprite = modeSprites[GlobalState.gameMode];
+		spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+		spriteRenderer.sprite = modeSprites[GlobalState.gameMode];
 	}
 	
 	void OnMouseDown() {
 		GlobalState.gameMode = (GlobalState.gameMode + 1) % 2;
-		renderer.sprite = modeSprites[GlobalState.gameMode];
+		spriteRenderer.sprite = modeSprites[GlobalState.gameMode];
 	}
 }
