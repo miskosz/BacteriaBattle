@@ -34,12 +34,20 @@ public class WinnerLoser : MonoBehaviour {
 
 		foreach (Renderer r in gameObject.GetComponentsInChildren<Renderer>())
 			r.enabled = true;
+
+		foreach (Animator a in gameObject.GetComponentsInChildren<Animator>())
+			a.enabled = true;
+
+
 	}
 
 	public void setHidden() {
 		
 		foreach (Renderer r in gameObject.GetComponentsInChildren<Renderer>())
 			r.enabled = false;
+
+		foreach (Animator a in gameObject.GetComponentsInChildren<Animator>())
+			a.enabled = false;
 	}
 	
 
