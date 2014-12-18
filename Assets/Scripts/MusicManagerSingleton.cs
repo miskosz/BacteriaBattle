@@ -4,7 +4,8 @@ using System.Collections;
 public class MusicManagerSingleton:MonoBehaviour {
 
 	private static MusicManagerSingleton instance = null;
-	private bool isMusicOn;
+	private bool isMusicOn,isSoundsOn;
+
 	AudioClip clip;
 	public static MusicManagerSingleton Instance {
 		get { 
@@ -49,15 +50,22 @@ public class MusicManagerSingleton:MonoBehaviour {
 		}
 
 	}
+
+	//OptionScene is using this via MenuManager. It toggles the sounds on/off
+	public void toggleSound(){
+		isSoundsOn = !isSoundsOn;
 			
-
-	public static void soundsOff(AudioSource music){
-
 	}
 
 	public bool musicOn(){
 
 		return this.isMusicOn;
 	}
-	
+
+	// When true, mute is on and there is no sounds
+	public bool IsSoundsOn() {
+
+			return this.isSoundsOn;
+
+	}
 }

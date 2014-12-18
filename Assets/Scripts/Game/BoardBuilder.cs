@@ -143,8 +143,16 @@ public class BoardBuilder : MonoBehaviour {
 			});
 
 			// play audio
-			audio.clip = gameOverAudio;
-			audio.Play();
+			if (MusicManagerSingleton.Instance.IsSoundsOn()==false) {
+				Debug.Log("Sounds are on");
+				audio.clip = gameOverAudio;
+				audio.Play();
+			}else{
+				Debug.Log("****Sounds are off****No gameOverAudio");
+
+			}
+			
+
 
 			// show pause menu
 			pauseMenu.Toggle();
@@ -218,9 +226,13 @@ public class BoardBuilder : MonoBehaviour {
 			});
 
 			if (origin) {
+
 				// play dividing sound
-				audio.clip = divisionAudio;
-				audio.Play();
+				if (MusicManagerSingleton.Instance.IsSoundsOn()==false) {
+					Debug.Log("Sounds are on");
+					audio.clip = divisionAudio;
+					audio.Play();
+				}
 				origin.Split(board[i,j]);
 				yield return StartCoroutine(GlobalAnimationTimer.WaitForAnimationEnd());
 			}

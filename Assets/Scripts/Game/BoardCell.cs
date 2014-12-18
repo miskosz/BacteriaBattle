@@ -88,9 +88,12 @@ public class BoardCell : MonoBehaviour {
 			PlayAnimation("Spawn");
 			GlobalAnimationTimer.AnimationTriggered(spawnAnimationClip);
 
-			// play audio
-			audio.clip = spawnAudio;
-			audio.Play();
+			if (MusicManagerSingleton.Instance.IsSoundsOn()==false) {
+				Debug.Log("Sounds are on");
+				// play audio
+				audio.clip = spawnAudio;
+				audio.Play();
+			}
 		}
 	}
 
@@ -103,9 +106,12 @@ public class BoardCell : MonoBehaviour {
 		PlayAnimation("Convert");
 		GlobalAnimationTimer.AnimationTriggered(convertAnimationClip);
 
-		// play audio
-		audio.clip = popAudio;
-		audio.Play();
+		if (MusicManagerSingleton.Instance.IsSoundsOn () == false) {
+				Debug.Log ("Sounds are on");
+				// play audio
+				audio.clip = popAudio;
+				audio.Play ();
+		}
 	}
 	
 	// trigger splitting animation
