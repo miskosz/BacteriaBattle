@@ -153,16 +153,10 @@ public class BoardBuilder : MonoBehaviour {
 			});
 
 			// play audio
-			if (MusicManagerSingleton.Instance.IsSoundsOn()==false) {
-				Debug.Log("Sounds are on");
+			if (MusicManagerSingleton.Instance.soundsOn()) {
 				audio.clip = gameOverAudio;
 				audio.Play();
-			}else{
-				Debug.Log("****Sounds are off****No gameOverAudio");
-
 			}
-			
-
 
 			// show pause menu
 			pauseMenu.Toggle();
@@ -238,11 +232,11 @@ public class BoardBuilder : MonoBehaviour {
 			if (origin) {
 
 				// play dividing sound
-				if (MusicManagerSingleton.Instance.IsSoundsOn()==false) {
-					Debug.Log("Sounds are on");
+				if (MusicManagerSingleton.Instance.soundsOn()) {
 					audio.clip = divisionAudio;
 					audio.Play();
 				}
+
 				origin.Split(board[i,j]);
 				yield return StartCoroutine(GlobalAnimationTimer.WaitForAnimationEnd());
 			}
@@ -260,9 +254,6 @@ public class BoardBuilder : MonoBehaviour {
 
 			yield return StartCoroutine(nextTurn());
 
-			//else {
-			//	enableInput();
-			//}
 		}
 
 		yield break;

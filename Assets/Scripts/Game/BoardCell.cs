@@ -88,9 +88,8 @@ public class BoardCell : MonoBehaviour {
 			PlayAnimation("Spawn");
 			GlobalAnimationTimer.AnimationTriggered(spawnAnimationClip);
 
-			if (MusicManagerSingleton.Instance.IsSoundsOn()==false) {
-				Debug.Log("Sounds are on");
-				// play audio
+			// play audio
+			if (MusicManagerSingleton.Instance.soundsOn()) {
 				audio.clip = spawnAudio;
 				audio.Play();
 			}
@@ -106,11 +105,10 @@ public class BoardCell : MonoBehaviour {
 		PlayAnimation("Convert");
 		GlobalAnimationTimer.AnimationTriggered(convertAnimationClip);
 
-		if (MusicManagerSingleton.Instance.IsSoundsOn () == false) {
-				Debug.Log ("Sounds are on");
-				// play audio
-				audio.clip = popAudio;
-				audio.Play ();
+		// play audio
+		if (MusicManagerSingleton.Instance.soundsOn()) {
+			audio.clip = popAudio;
+			audio.Play ();
 		}
 	}
 	

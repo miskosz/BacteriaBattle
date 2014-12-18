@@ -4,7 +4,7 @@ using System.Collections;
 public class MusicManagerSingleton:MonoBehaviour {
 
 	private static MusicManagerSingleton instance = null;
-	private bool isMusicOn,isSoundsOn;
+	private bool isMusicOff,isSoundsOff;
 
 	AudioClip clip;
 	public static MusicManagerSingleton Instance {
@@ -26,26 +26,26 @@ public class MusicManagerSingleton:MonoBehaviour {
 		DontDestroyOnLoad(this.gameObject);
 	}
 		
-	public void play(AudioClip clip, bool loop = false){
+	public void playMusic(AudioClip clip){
 		Debug.Log ("MusicManagerSingleton.play()");
 
-		if (audio.clip != clip && isMusicOn==false) {
+		if (audio.clip != clip && isMusicOff==false) {
 			audio.Stop();
 			audio.clip = clip;
-			audio.loop = loop;
+			audio.loop = true;
 			audio.Play();
 		}
 	}
 	
 	//OptionScene is using this via MenuManager. It toggles the music on/off
 	public void toggleMusic(){
-		isMusicOn = !isMusicOn;
+		isMusicOff = !isMusicOff;
 
 		// Play music when Toggle button is ON and gives false boolean
-		if (isMusicOn == false) {
+		if (isMusicOff == false) {
 			audio.Play();	
 		}
-		if (isMusicOn == true) {
+		if (isMusicOff == true) {
 			audio.Stop();
 		}
 
@@ -53,19 +53,15 @@ public class MusicManagerSingleton:MonoBehaviour {
 
 	//OptionScene is using this via MenuManager. It toggles the sounds on/off
 	public void toggleSound(){
-		isSoundsOn = !isSoundsOn;
-			
+		isSoundsOff = !isSoundsOff;
 	}
 
 	public bool musicOn(){
-
-		return this.isMusicOn;
+		return !this.isMusicOff;
 	}
 
 	// When true, mute is on and there is no sounds
-	public bool IsSoundsOn() {
-
-			return this.isSoundsOn;
-
+	public bool soundsOn() {
+		return !this.isSoundsOff;
 	}
 }

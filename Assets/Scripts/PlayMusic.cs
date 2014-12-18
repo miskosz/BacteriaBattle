@@ -6,7 +6,7 @@ public class PlayMusic : MonoBehaviour {
 	public AudioClip musicClip;
 	
 	void Start () {
-		MusicManagerSingleton.Instance.play(musicClip, true);
+		MusicManagerSingleton.Instance.playMusic(musicClip);
 	}
 	
 

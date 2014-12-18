@@ -8,32 +8,27 @@ public class MenuManager : MonoBehaviour {
 	public AudioClip musicClip;
 	public UnityEngine.UI.Toggle toggle,soundsToggle;
 
+	// toggle on == sounds off
 
 	public void Start ()
 	{
 		toggle = GameObject.Find("MusicToggle").GetComponent<UnityEngine.UI.Toggle>();
 		soundsToggle =  GameObject.Find("SoundsToggle").GetComponent<UnityEngine.UI.Toggle>();
-		toggle.isOn  = MusicManagerSingleton.Instance.musicOn ();
-		soundsToggle.isOn  = MusicManagerSingleton.Instance.IsSoundsOn();
+		toggle.isOn  = !MusicManagerSingleton.Instance.musicOn();
+		soundsToggle.isOn  = !MusicManagerSingleton.Instance.soundsOn();
 		Debug.Log ("0. START() MenuManager musicOn in ToggleMusic()--->" +toggle.isOn);
 	}
 
 	public void ToggleMusic() {
-
-		if (toggle.isOn != MusicManagerSingleton.Instance.musicOn()) {
-			MusicManagerSingleton.Instance.toggleMusic ();
-
-		} 
-
+		if (toggle.isOn != !MusicManagerSingleton.Instance.musicOn()) {
+			MusicManagerSingleton.Instance.toggleMusic();
+		}
 	}
 
 	public void ToggleSound() {
-		
-		if (soundsToggle.isOn != MusicManagerSingleton.Instance.IsSoundsOn()) {
+		if (soundsToggle.isOn != !MusicManagerSingleton.Instance.soundsOn()) {
 			MusicManagerSingleton.Instance.toggleSound();
-
 		} 
-		
 	}
 
 }
