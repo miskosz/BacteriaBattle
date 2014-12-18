@@ -28,25 +28,8 @@ public class BoardBuilder : MonoBehaviour {
 	// 1 - empty
 	// 2 - blue
 	// 3 - orange
-	/*int[,] boardSetup = {
-		{2,1,1,1,0,0,0},
-		{1,1,1,1,1,0,0},
-		{1,1,1,1,1,1,0},
-		{3,1,1,1,1,1,3},
-		{0,1,1,1,1,1,1},
-		{0,0,1,1,1,1,1},
-		{0,0,0,1,1,1,2}
-	};*/
-	/*int[,] boardSetup = {
-		{2,1,1,0,0,},
-		{1,1,1,1,0,},
-		{1,1,1,1,3,},
-		{2,2,2,1,1,},
-		{3,1,2,2,1,},
-		{0,1,1,3,2,},
-		{0,0,1,3,2,}
-	};*/
-	int[,] boardSetup = {
+	int[,] boardSetup;
+	int[,] board0 = {
 		{2,1,1,0,0,},
 		{1,1,1,1,0,},
 		{1,1,1,1,3,},
@@ -55,13 +38,26 @@ public class BoardBuilder : MonoBehaviour {
 		{0,1,1,1,1,},
 		{0,0,1,1,2,}
 	};
-	/*int[,] boardSetup = {
-		{2,0,0},
-		{1,1,0},
-		{1,1,1},
-		{0,1,1},
-		{0,0,3}
-	};*/
+	int[,] board1 = {
+		{0,1,1,0,0,0,0},
+		{0,1,1,1,1,0,0},
+		{1,1,1,0,1,2,0},
+		{1,1,1,1,1,1,0},
+		{0,1,1,1,1,1,0},
+		{0,1,1,1,1,1,1},
+		{0,3,1,0,1,1,1},
+		{0,0,1,1,1,1,0},
+		{0,0,0,0,1,1,0}
+	};
+	int[,] board2 = {
+		{2,1,1,1,0,0,0},
+		{1,1,1,1,1,0,0},
+		{1,1,1,1,1,1,0},
+		{3,1,1,1,1,1,3},
+		{0,1,1,1,1,1,1},
+		{0,0,1,1,1,1,1},
+		{0,0,0,1,1,1,2}
+	};
 
 	// game board
 	BoardCell[,] board;
@@ -73,6 +69,20 @@ public class BoardBuilder : MonoBehaviour {
 	void Start () {
 		// new game
 		gameOver = false;
+
+		// apply settings
+		switch (GlobalState.gameMode) {
+		case 0: playerVsAI = false; break;
+		case 1: playerVsAI = true; break;
+		default: throw new UnityException("Invalid game mode.");
+		}
+
+		switch (GlobalState.board) {
+		case 0: boardSetup = board0; break;
+		case 1: boardSetup = board1; break;
+		case 2: boardSetup = board2; break;
+		default: throw new UnityException("Invalid board.");
+		}
 
 		// compute layout vectors
 		// i - rows, j - columns

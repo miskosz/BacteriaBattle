@@ -15,4 +15,9 @@ static class GlobalState {
 		return startingPlayer;
 	}
 
+	// 0: 2-player, 1: AI
+	public static int gameMode = 0;
+
+	// 3 boards
+	public static int board = 0;
 }
