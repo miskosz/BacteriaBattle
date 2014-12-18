@@ -22,9 +22,7 @@ public class MenuManager : MonoBehaviour {
 
 		if (toggle.isOn != MusicManagerSingleton.Instance.musicOn()) {
 			MusicManagerSingleton.Instance.toggleMusic ();
-			//toggle.isOn = MusicManagerSingleton.Instance.musicOn ();
-			//Debug.Log ("1. AFTER TOGGLING MenuManager musicOn in ToggleMusic()--->" +toggle.isOn);
-			//Debug.Log ("2. AFTER TOGGLING MenuManager musicOn in ToggleMusic()--->" +MusicManagerSingleton.Instance.musicOn ());
+
 		} 
 
 	}
@@ -33,8 +31,7 @@ public class MenuManager : MonoBehaviour {
 		
 		if (soundsToggle.isOn != MusicManagerSingleton.Instance.IsSoundsOn()) {
 			MusicManagerSingleton.Instance.toggleSound();
-			Debug.Log ("1. AFTER TOGGLING MenuManager musicOn in IsSoundsOn()--->" +soundsToggle.isOn);
-			Debug.Log ("2. AFTER TOGGLING MenuManager musicOn in IsSoundsOn()--->" +MusicManagerSingleton.Instance.IsSoundsOn ());
+
 		} 
 		
 	}
