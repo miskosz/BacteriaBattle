@@ -28,7 +28,7 @@ public class MusicManagerSingleton:MonoBehaviour {
 	public void play(AudioClip clip, bool loop = false){
 		Debug.Log ("MusicManagerSingleton.play()");
 
-		if (audio.clip != clip) {
+		if (audio.clip != clip && isMusicOn==true) {
 			audio.Stop();
 			audio.clip = clip;
 			audio.loop = loop;
@@ -39,7 +39,7 @@ public class MusicManagerSingleton:MonoBehaviour {
 	// Options page is buggy. In some cases the music button is just the opposite than the real state is
 	// I think that scene jumping causes this because Unity reads scene again and the default state in Toggle button in music on.
 	public void toggleMusic(){
-		Debug.Log ("toggleMusic");
+		Debug.Log ("toggleMusic: "+isMusicOn);
 		isMusicOn = !isMusicOn;
 		if (isMusicOn == true) {
 			audio.Play();	
