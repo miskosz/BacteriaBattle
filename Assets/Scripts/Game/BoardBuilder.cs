@@ -7,9 +7,6 @@ public class BoardBuilder : MonoBehaviour {
 	public GameObject boardCellPrefab;
 	public float cellDistance = 1;
 
-	// this is bad and you should feel bad
-	public float splittingAnimDuration = 0.5f;
-
 	public AudioClip divisionAudio;
 	public AudioClip gameOverAudio;
 

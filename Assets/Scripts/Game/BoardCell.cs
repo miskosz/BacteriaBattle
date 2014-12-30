@@ -2,7 +2,6 @@
 using System.Collections;
 //using System.Collections.Generic;
 
-public enum BoardCellState {Player1, Player2, Empty};
 
 public class BoardCell : MonoBehaviour {
 

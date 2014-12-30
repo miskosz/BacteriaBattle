@@ -4,7 +4,7 @@ using System.Collections;
 public class MusicManagerSingleton:MonoBehaviour {
 
 	private static MusicManagerSingleton instance = null;
-	private bool isMusicOn = true, isSoundsOn = true;
+	private bool isMusicOn = false /* TODO */, isSoundsOn = true;
 
 	AudioClip clip;
 	public static MusicManagerSingleton Instance {
