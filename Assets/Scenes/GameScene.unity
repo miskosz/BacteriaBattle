@@ -107,7 +107,7 @@ MonoBehaviour:
   cellDistance: 1
   splittingAnimDuration: .5
   divisionAudio: {fileID: 8300000, guid: 4f371ab7eac5a444898ca40a6fe09ca5, type: 3}
-  gameOverAudio: {fileID: 8300000, guid: bc499e38f68ba4df2ac3da75c7bd3d86, type: 3}
+  gameOverAudio: {fileID: 8300000, guid: a5389a80cf7184169b4df30bdd0380cd, type: 3}
   pauseMenu: {fileID: 1661190820}
   winnerLoser: {fileID: 212854584}
 --- !u!4 &31124283
@@ -1229,7 +1229,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 1, g: 0, b: .55862093, a: .0196078438}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: .0196078438}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0

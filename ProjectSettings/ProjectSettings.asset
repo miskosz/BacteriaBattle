@@ -110,7 +110,7 @@ PlayerSettings:
   m_BuildTargetIcons:
   - m_BuildTarget: 
     m_Icons:
-    - m_Icon: {fileID: 2800000, guid: 0782aced679854a119624c18571c699a, type: 3}
+    - m_Icon: {fileID: 2800000, guid: 32bc7e9308df84620b43603b8f98a939, type: 3}
       m_Size: 128
   m_BuildTargetBatching:
   - m_BuildTarget: iPhone
@@ -158,7 +158,8 @@ PlayerSettings:
   psp2PackagedResourcesPath: 
   flashStrippingLevel: 2
   spritePackerPolicy: 
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    1: 
   metroPackageName: Bacteria
   metroPackageLogo: 
   metroPackageLogo140: 
