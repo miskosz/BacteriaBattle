@@ -4,14 +4,14 @@ using System.Collections;
 static class GlobalState {
 
 	// starting player, 0 or 1
-	static int startingPlayer;
+	static BoardCellState startingPlayer;
 
 	static GlobalState() {
-		startingPlayer = 0;
+		startingPlayer = BoardCellState.Player1;
 	}
 
-	public static int GetStartingPlayer() {
-		startingPlayer = 1-startingPlayer;
+	public static BoardCellState GetStartingPlayer() {
+		startingPlayer = startingPlayer.Opponent();
 		return startingPlayer;
 	}
 

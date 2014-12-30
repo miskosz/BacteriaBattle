@@ -4,11 +4,11 @@ using System.Collections;
 public class TestScript : MonoBehaviour {
 
 	int[,] boardSetup = {
-		{1,4,4},
-		{3,3,4},
-		{3,3,3},
-		{4,3,3},
-		{4,4,0}
+		{1,3,3},
+		{2,2,3},
+		{2,2,2},
+		{3,2,2},
+		{3,3,0}
 	};
 
 	// Use this for initialization

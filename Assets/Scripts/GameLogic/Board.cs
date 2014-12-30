@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
-public enum BoardCellState {Player1 = 0, Player2 = 1, Empty = 3, OutOfBoard = 4};
+public enum BoardCellState {Player1 = 0, Player2 = 1, Empty = 2, OutOfBoard = 3};
 public enum ActionType {Spawn, Split, Convert};
 
 static class BoardCellStateExtensions {
@@ -20,14 +21,14 @@ public struct IntPair {
 	public int i, j;
 };
 
-
 public struct Action {
 	public ActionType type;
 	public IntPair cell, splitCell;
-	public Action(ActionType type, IntPair cell) {
+	public Action(ActionType type, IntPair cell) : this(type, cell, new IntPair (-1, -1)) {}
+	public Action(ActionType type, IntPair cell, IntPair splitCell) {
 		this.type = type;
 		this.cell = cell;
-		this.splitCell = new IntPair(0,0);
+		this.splitCell = splitCell; // origin of split
 	}
 }
 
@@ -43,7 +44,15 @@ public class Board {
 	// whose turn is it
 	public BoardCellState playerOnTurn;
 
-	// constructor
+	// constructors
+
+	// copy	constructor
+	public Board(Board b) {
+		playerOnTurn = b.playerOnTurn;
+		board = new BoardCellState[b.board.GetLength(0),b.board.GetLength(1)];
+		Array.Copy(b.board, board, board.Length);
+	}
+
 	public Board(int[,] boardSetup, BoardCellState playerOnTurn = BoardCellState.Player1) {
 
 		this.playerOnTurn = playerOnTurn;
@@ -57,6 +66,7 @@ public class Board {
 		}
 	}
 
+
 	///
 	/// Game Logic
 	///
@@ -68,17 +78,18 @@ public class Board {
 
 		// check if the cell is empty
 		if (board[i,j] != BoardCellState.Empty)
-			return null;
+			throw new Exception("The move destination cell is not empty!");
+			//return null;
 
 		// create a new board and place the player on (i,j)
-		Board nextBoard = (Board)this.MemberwiseClone();
+		Board nextBoard = new Board(this);
 		nextBoard.board[i,j] = playerOnTurn;
 		nextBoard.playerOnTurn = playerOnTurn.Opponent();
 
 		// convert neighbours
 		ForEachCellNeighbour(i, j, (int ii, int jj) => {
 			if (board[ii,jj] == playerOnTurn.Opponent()) {
-				board[ii,jj] = playerOnTurn;
+				nextBoard.board[ii,jj] = playerOnTurn;
 			}
 		});
 
@@ -90,6 +101,8 @@ public class Board {
 
 	public List<Action> MakeMove(int i, int j) {
 
+		Debug.Log("Move to " + i + " " + j);
+
 		// simulate the move
 		Board nextBoard = SimulateMove(i,j);
 
@@ -98,10 +111,32 @@ public class Board {
 
 		ForEachBoardCell((int ii, int jj) => {
 			if (board[ii,jj] != nextBoard.board[ii,jj]) {
-				if (board[ii,jj] == BoardCellState.Empty)
+				if (i == ii && j == jj) {
+					// it is a split, find split cell
+					IntPair splitCell = new IntPair(-1,-1);
+					ForEachCellNeighbour(ii, jj, (int si, int sj) => {
+						if (board[si,sj] == playerOnTurn) {
+							splitCell = new IntPair(si,sj);
+						}
+					});
+
+					if (splitCell.i == -1) {
+						// spawn instead
+						actions.Add(new Action(ActionType.Spawn, new IntPair(ii, jj)));
+					}
+					else {
+						actions.Add(new Action(ActionType.Split, new IntPair(ii, jj), splitCell));
+					}
+
+				}
+				else if (board[ii,jj] == BoardCellState.Empty) {
+					// spawn
 					actions.Add(new Action(ActionType.Spawn, new IntPair(ii, jj)));
-				else
+				}
+				else {
+					// convert
 					actions.Add(new Action(ActionType.Convert, new IntPair(ii, jj)));
+				}
 			}
 		});
 

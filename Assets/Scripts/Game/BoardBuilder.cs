@@ -15,22 +15,19 @@ public class BoardBuilder : MonoBehaviour {
 
 	int[] scoreCount = {0, 0};
 	bool inputEnabled = false;
-	private bool playerVsAI;
+	bool playerVsAI;
 
 	// initial board setup
-	// 0 - out of board
-	// 1 - empty
-	// 2 - blue
-	// 3 - orange
+	// see Board.cs for legend
 	int[,] boardSetup;
 	int[,] board0 = {
-		{2,1,1,0,0,},
-		{1,1,1,1,0,},
-		{1,1,1,1,3,},
-		{1,1,1,1,1,},
-		{3,1,1,1,1,},
-		{0,1,1,1,1,},
-		{0,0,1,1,2,}
+		{1,2,2,3,3,},
+		{2,2,2,2,3,},
+		{2,2,2,2,0,},
+		{2,2,2,2,2,},
+		{0,2,2,2,2,},
+		{3,2,2,2,2,},
+		{3,3,2,2,1,}
 	};
 	int[,] board1 = {
 		{0,1,1,0,0,0,0},
@@ -54,12 +51,9 @@ public class BoardBuilder : MonoBehaviour {
 	};
 
 	// game board
-	BoardCell[,] board;
-
-	// whose turn is it (0 or 1)
-	int playerOnTurn;
-	BoardCellState[] playerState = {BoardCellState.Player1, BoardCellState.Player2};
-
+	Board board;
+	BoardCell[,] boardCells;
+	
 	void Start () {
 
 		// apply settings
@@ -76,6 +70,8 @@ public class BoardBuilder : MonoBehaviour {
 		default: throw new UnityException("Invalid board.");
 		}
 
+		board = new Board(boardSetup, GlobalState.GetStartingPlayer());
+
 		// compute layout vectors
 		// i - rows, j - columns
 		Vector3 iVector = new Vector3 (0, -cellDistance, 0);
@@ -91,36 +87,29 @@ public class BoardBuilder : MonoBehaviour {
 		//Debug.Log(scaleFactor);
 
 		// init the board
-		board = new BoardCell[boardSetup.GetLength(0),boardSetup.GetLength(1)];
+		boardCells = new BoardCell[boardSetup.GetLength(0),boardSetup.GetLength(1)];
 
-		forEachBoardCell((int i, int j) => {
+		board.ForEachBoardCell((int i, int j) => {
 
 			// determine cell state
-			BoardCellState state;
-			switch (boardSetup[i,j]) {
-			case 1: state = BoardCellState.Empty; break;
-			case 2: state = BoardCellState.Player1; break;
-			case 3: state = BoardCellState.Player2; break;
-			default: throw new UnityException("Invalid board setup cell state.");
-			}
+			BoardCellState state = board.board[i,j];
 
 			// create board cell
 			//Debug.Log("Initializing " + i + " " + j);
-			board[i,j] = ((GameObject) Instantiate(boardCellPrefab)).GetComponent<BoardCell>();
-			board[i,j].transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
-			board[i,j].transform.position = (i-iCenter)*iVector + (j-jCenter)*jVector;
-			board[i,j].transform.position *= scaleFactor;
-			board[i,j].Initialize(this, i, j);
+			boardCells[i,j] = ((GameObject) Instantiate(boardCellPrefab)).GetComponent<BoardCell>();
+			boardCells[i,j].transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
+			boardCells[i,j].transform.position = (i-iCenter)*iVector + (j-jCenter)*jVector;
+			boardCells[i,j].transform.position *= scaleFactor;
+			boardCells[i,j].Initialize(this, i, j);
 			if (state != BoardCellState.Empty)
-				board[i,j].Spawn(state);
+				boardCells[i,j].Spawn(state);
 		});
 
 		// initialize highlighted cells & stuff
-		playerOnTurn = 1 - GlobalState.GetStartingPlayer();
-		StartCoroutine(nextTurn());
+		//StartCoroutine(nextTurn());
 	}
 
-	IEnumerator nextTurn() {
+	/*IEnumerator nextTurn() {
 		// switch player
 		playerOnTurn = 1 - playerOnTurn;
 
@@ -176,26 +165,26 @@ public class BoardBuilder : MonoBehaviour {
 		forEachBoardCell((int i, int j) => {
 			
 			bool highlight = false;
-			if (board[i,j].isEmpty()) {
+			if (boardCells[i,j].isEmpty()) {
 				// iterate over cell neighbours
 				forEachCellNeighbour(i, j, (int ii, int jj) => {
-					if (board[ii,jj].getState() == player) {
+					if (boardCells[ii,jj].getState() == player) {
 						highlight = true;
 						hasMove = true;
 					}
 				});
 			}
-			board[i,j].setHighlighted(highlight, player); 
+			boardCells[i,j].setHighlighted(highlight, player); 
 			
 		});
 
 		return hasMove;
-	}
+	}*/
 
 	void HighlightOff() {
-		forEachBoardCell((int i, int j) => {
-			if (board[i,j].getHighlighted()) {
-				board[i,j].setHighlighted(false); 
+		board.ForEachBoardCell((int i, int j) => {
+			if (boardCells[i,j].getHighlighted()) {
+				boardCells[i,j].setHighlighted(false); 
 			}
 		});
 	}
@@ -205,43 +194,43 @@ public class BoardBuilder : MonoBehaviour {
 		//Debug.Log ("Player selected " + i + " " + j);
 		
 		// only moves to highlighted empty cells are valid
-		if (inputEnabled && board[i,j].getHighlighted() && board[i,j].isEmpty()) {
+		if (inputEnabled /*&& boardCells[i,j].getHighlighted()*/ && boardCells[i,j].isEmpty()) {
 		
 			//Debug.Log ("It is a valid move.");
 
-			disableInput();
-			HighlightOff();
+			//disableInput();
+			//HighlightOff();
 
-			// animate the originating cell
-			BoardCell origin = null;
-			forEachCellNeighbour(i, j, (int ii, int jj) => {
-				if (board[ii,jj].getState() == playerState[playerOnTurn]) {
-					origin = board[ii,jj];
+			// TODO: playerOnTurn is switched by this!
+			List<Action> actions = board.MakeMove(i,j);
+
+			// Process the actions by type, in the order split - convert - spawn.
+			// Doing foreach 3x does not kill us.
+
+			// split
+			foreach (Action action in actions) {
+				if (action.type == ActionType.Split) {
+					boardCells[action.splitCell.i,action.splitCell.j].Split(boardCells[action.cell.i,action.cell.j]);
+					yield return StartCoroutine(GlobalAnimationTimer.WaitForAnimationEnd());
+					boardCells[action.cell.i,action.cell.j].Appear(board.playerOnTurn.Opponent());
 				}
-			});
-
-			if (origin) {
-
-				// play dividing sound
-				MusicManagerSingleton.Instance.playSound(divisionAudio, audio);
-
-				origin.Split(board[i,j]);
-				yield return StartCoroutine(GlobalAnimationTimer.WaitForAnimationEnd());
 			}
 
-			// new bacteria here, please!
-			board[i,j].Appear(playerState[playerOnTurn]);
-			
-			// convert neighbours
-			forEachCellNeighbour(i, j, (int ii, int jj) => {
-				if (board[ii,jj].getState() == playerState[1-playerOnTurn]) {
-					board[ii,jj].Convert();
+			// convert
+			foreach (Action action in actions) {
+				if (action.type == ActionType.Convert) {
+					boardCells[action.cell.i,action.cell.j].Convert();
 				}
-			});
+			}
 			yield return StartCoroutine(GlobalAnimationTimer.WaitForAnimationEnd());
 
-			yield return StartCoroutine(nextTurn());
-
+			// spawn
+			foreach (Action action in actions) {
+				if (action.type == ActionType.Spawn) {
+					boardCells[action.cell.i,action.cell.j].Spawn(board.playerOnTurn.Opponent());
+				}
+			}
+			yield return StartCoroutine(GlobalAnimationTimer.WaitForAnimationEnd());
 		}
 
 		yield break;
@@ -251,15 +240,15 @@ public class BoardBuilder : MonoBehaviour {
 	public void updateScore() {
 		int[] tempScore = {0, 0};
 
-		forEachBoardCell((int i, int j) => {
-			if (!board[i,j].isEmpty())
-				tempScore[(int)board[i,j].getState()]++;
+		board.ForEachBoardCell((int i, int j) => {
+			if (!boardCells[i,j].isEmpty())
+				tempScore[(int)boardCells[i,j].getState()]++;
 		});
 		
 		scoreCount = tempScore;
 	}
 
-	IEnumerator MakeAIMove() {
+	/*IEnumerator MakeAIMove() {
 		Debug.Log("MakeAIMove");
 
 		disableInput(); // TODO
@@ -268,7 +257,7 @@ public class BoardBuilder : MonoBehaviour {
 		List<IntPair> possibleMoves = new List<IntPair>();
 
 		forEachBoardCell((int i, int j) => {
-			if (board[i,j].getHighlighted())
+			if (boardCells[i,j].getHighlighted())
 				possibleMoves.Add(new IntPair(i,j));
 		});
 
@@ -281,7 +270,7 @@ public class BoardBuilder : MonoBehaviour {
 		}
 
 		yield break;
-	}
+	}*/
 
 	public int getScore(BoardCellState player) {
 		return scoreCount[(int)player];
@@ -294,127 +283,6 @@ public class BoardBuilder : MonoBehaviour {
 	public void enableInput() {
 		inputEnabled = true;
 	}
-
-	// simple struct for fillClosedAreas needs, do not use elsewhere if not nesessary
-	struct IntPair {
-		public IntPair(int i, int j) {
-			this.i = i;
-			this.j = j;
-		}
-		public int i, j;
-	};
-
-
-	// Let us say that an area of empty is WEAKLY CONNECTED if cells are
-	// separated by at most one bacteria. A weakly connected area should
-	// be filled if all of its boundary bacteria are of the same type.
-	void fillClosedAreas() {
-
-		// detect weakly connected areas by a depth-first search
-
-		int[,] visited = new int[boardSetup.GetLength(0),boardSetup.GetLength(1)];
-		int areaId = 0;
-
-		forEachBoardCell((int i, int j) => {
-			// find empty cell which was not visited
-			if (board[i,j].isEmpty() && visited[i,j] == 0) {
-				// fill this area
-				areaId++;
-
-				// store boundary type and if uniform
-				BoardCellState boundary = BoardCellState.Empty;
-				bool isUniform = true;
-
-				// store positions to visit in a stack for dfs
-				Stack<IntPair> dfs = new Stack<IntPair>();
-
-				// kick off the search
-				dfs.Push(new IntPair(i,j));
-				while (dfs.Count != 0) {
-					IntPair pos = dfs.Pop();
-					if (visited[pos.i, pos.j] != 0)
-						continue;
-
-					// this cell has not been visited yet
-
-					// mark as visited
-					// add all neighbours to the queue if empty
-					// add empty neighbours if not empty
-					visited[pos.i, pos.j] = areaId;
-
-					forEachCellNeighbour(pos.i, pos.j, (int ii, int jj) => {
-						if (board[pos.i, pos.j].isEmpty() || board[ii, jj].isEmpty())
-							dfs.Push(new IntPair(ii, jj));
-					});
-
-					// store if we have seen bacteria
-					if (! board[pos.i, pos.j].isEmpty()) {
-						if (boundary == BoardCellState.Empty)
-							boundary = board[pos.i, pos.j].getState();
-						else if (boundary != board[pos.i, pos.j].getState())
-							isUniform = false;
-					}
-				}
-
-				// if boundary is uniform, fill the cells from area areaId
-				if (isUniform) {
-					forEachBoardCell((int ni, int nj) => {
-						if (visited[ni,nj] == areaId) {
-							board[ni,nj].Spawn(boundary);
-						}
-					});
-				}
-			}
-		});
-	}
-
-
-	///
-	/// Board utilities
-	///
-
-	// neighbourhood vectors di, dj
-	// 1 2
-	// 0 . 3
-	//   5 4
-	int [] di = {0, -1, -1, 0, 1, 1};
-	int [] dj = {-1, -1, 0, 1, 1, 0};
-
-	bool onBoard(int i, int j) {
-		return (
-			0 <= i && i < boardSetup.GetLength(0) &&
-			0 <= j && j < boardSetup.GetLength(1) &&
-			boardSetup[i,j] != 0
-		);
-	}
-
-	// board iterator
-	// usage:
-	//     forEachBoardCell((i,j) => {
-	//         Debug.Log("boardCell " + i + " " + j);
-	//     });
-	public delegate void CellDelegate(int i, int j);
-	public void forEachBoardCell(CellDelegate method)
-	{
-		for (int i = 0; i < boardSetup.GetLength(0); i++) {
-			for (int j = 0; j < boardSetup.GetLength(1); j++) {
-				if (onBoard(i,j)) {
-					method(i,j);
-				}
-			}
-		}
-	}
-
-	// cell neighbourhood iterator
-	public void forEachCellNeighbour(int i, int j, CellDelegate method)
-	{
-		for (int d = 0; d < di.Length; d++) {
-			// get neighbour coordinates
-			int ii = i + di[d], jj = j + dj[d];
-			if (onBoard(ii, jj)) {
-				method(ii, jj);
-			}
-		}
-	}
+	
 
 }
