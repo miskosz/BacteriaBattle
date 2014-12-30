@@ -4,7 +4,7 @@ using System.Collections;
 public class MusicManagerSingleton:MonoBehaviour {
 
 	private static MusicManagerSingleton instance = null;
-	private bool isMusicOff,isSoundsOff;
+	private bool isMusicOn = true, isSoundsOn = true;
 
 	AudioClip clip;
 	public static MusicManagerSingleton Instance {
@@ -15,53 +15,56 @@ public class MusicManagerSingleton:MonoBehaviour {
 		
 	void Awake() {
 		if (instance != null && instance != this) {
-			Debug.Log ("Game object already created");
+			Debug.Log ("MusicManagerSingleton already created");
 			Destroy(this.gameObject);
 			return;
 		} else {
-			Debug.Log ("MusicManagerSingleton null");
+			Debug.Log ("Creating MusicManagerSingleton");
 			instance = this;
 		}
 		//This prevents that this game object is not destroyed when scene changes
 		DontDestroyOnLoad(this.gameObject);
 	}
-		
-	public void playMusic(AudioClip clip){
-		Debug.Log ("MusicManagerSingleton.play()");
 
-		if (audio.clip != clip && isMusicOff==false) {
-			audio.Stop();
+	public void playMusic(AudioClip clip){
+		if (audio.clip != clip) {
 			audio.clip = clip;
-			audio.loop = true;
-			audio.Play();
+			if (isMusicOn) {
+				audio.Stop();
+				audio.loop = true;
+				audio.Play();
+			}
 		}
 	}
-	
+
+	public void playSound(AudioClip clip, AudioSource audioSrc){
+		if (isSoundsOn) {
+			audioSrc.clip = clip;
+			audioSrc.Play();
+		}
+	}
+
 	//OptionScene is using this via MenuManager. It toggles the music on/off
 	public void toggleMusic(){
-		isMusicOff = !isMusicOff;
+		isMusicOn = !isMusicOn;
 
-		// Play music when Toggle button is ON and gives false boolean
-		if (isMusicOff == false) {
+		if (isMusicOn)
 			audio.Play();	
-		}
-		if (isMusicOff == true) {
+		else
 			audio.Stop();
-		}
-
 	}
 
 	//OptionScene is using this via MenuManager. It toggles the sounds on/off
 	public void toggleSound(){
-		isSoundsOff = !isSoundsOff;
+		isSoundsOn = !isSoundsOn;
 	}
 
 	public bool musicOn(){
-		return !this.isMusicOff;
+		return isMusicOn;
 	}
 
 	// When true, mute is on and there is no sounds
 	public bool soundsOn() {
-		return !this.isSoundsOff;
+		return isSoundsOn;
 	}
 }

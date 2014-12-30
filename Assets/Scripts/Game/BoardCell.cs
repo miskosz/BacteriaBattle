@@ -89,10 +89,7 @@ public class BoardCell : MonoBehaviour {
 			GlobalAnimationTimer.AnimationTriggered(spawnAnimationClip);
 
 			// play audio
-			if (MusicManagerSingleton.Instance.soundsOn()) {
-				audio.clip = spawnAudio;
-				audio.Play();
-			}
+			MusicManagerSingleton.Instance.playSound(spawnAudio, audio);
 		}
 	}
 
@@ -106,10 +103,7 @@ public class BoardCell : MonoBehaviour {
 		GlobalAnimationTimer.AnimationTriggered(convertAnimationClip);
 
 		// play audio
-		if (MusicManagerSingleton.Instance.soundsOn()) {
-			audio.clip = popAudio;
-			audio.Play ();
-		}
+		MusicManagerSingleton.Instance.playSound(popAudio, audio);
 	}
 	
 	// trigger splitting animation

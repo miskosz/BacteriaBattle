@@ -3,9 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class BoardBuilder : MonoBehaviour {
-
-	public bool playerVsAI = false;
-
+	
 	public GameObject boardCellPrefab;
 	public float cellDistance = 1;
 
@@ -19,8 +17,8 @@ public class BoardBuilder : MonoBehaviour {
 	public WinnerLoser winnerLoser;
 
 	int[] scoreCount = {0, 0};
-
 	bool inputEnabled = false;
+	private bool playerVsAI;
 
 	// initial board setup
 	// 0 - out of board
@@ -150,10 +148,7 @@ public class BoardBuilder : MonoBehaviour {
 			});
 
 			// play audio
-			if (MusicManagerSingleton.Instance.soundsOn()) {
-				audio.clip = gameOverAudio;
-				audio.Play();
-			}
+			MusicManagerSingleton.Instance.playSound(gameOverAudio, audio);
 
 			// draw winner and loser
 			if (scoreCount[0] < scoreCount[1])
@@ -231,10 +226,7 @@ public class BoardBuilder : MonoBehaviour {
 			if (origin) {
 
 				// play dividing sound
-				if (MusicManagerSingleton.Instance.soundsOn()) {
-					audio.clip = divisionAudio;
-					audio.Play();
-				}
+				MusicManagerSingleton.Instance.playSound(divisionAudio, audio);
 
 				origin.Split(board[i,j]);
 				yield return StartCoroutine(GlobalAnimationTimer.WaitForAnimationEnd());
