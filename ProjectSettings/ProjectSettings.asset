@@ -112,6 +112,18 @@ PlayerSettings:
     m_Icons:
     - m_Icon: {fileID: 2800000, guid: 32bc7e9308df84620b43603b8f98a939, type: 3}
       m_Size: 128
+  - m_BuildTarget: Android
+    m_Icons:
+    - m_Icon: {fileID: 2800000, guid: ab64fded90a84494a90afa1e7591ed84, type: 3}
+      m_Size: 144
+    - m_Icon: {fileID: 0}
+      m_Size: 96
+    - m_Icon: {fileID: 0}
+      m_Size: 72
+    - m_Icon: {fileID: 0}
+      m_Size: 48
+    - m_Icon: {fileID: 0}
+      m_Size: 36
   m_BuildTargetBatching:
   - m_BuildTarget: iPhone
     m_StaticBatching: 1

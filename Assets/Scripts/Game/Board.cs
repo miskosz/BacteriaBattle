@@ -188,9 +188,6 @@ public class Board {
 		});
 		
 		scoreCount = tempScore;
-
-		// TODO
-		Debug.Log("AI score: " + AIScore());
 	}
 
 	// Let us say that an area of empty is WEAKLY CONNECTED if cells are
@@ -313,12 +310,7 @@ public class Board {
 		public BoardCellState player;
 		public int dist;
 	}
-
-	public struct AIMinimax {
-		public IntPair pos;
-		public int score;
-	}
-
+	
 	public int AIScore() {
 		// +4 for my bacteria
 		// +2 for closer field
@@ -371,8 +363,13 @@ public class Board {
 				score[(int)closer[i,j].player] += 2;
 		});
 
-		Debug.Log("AIS: " + score[0] + " : " + score[1]);
 		return score[(int)playerOnTurn] - score[(int)playerOnTurn.Opponent()];
+	}
+
+	public class AIMinimax {
+		public IntPair pos;
+		public int score;
+		public int rand;
 	}
 
 	public IntPair GetAIMove() {
@@ -389,16 +386,48 @@ public class Board {
 
 		List<AIMinimax> scoredMoves = new List<AIMinimax>();
 
-		foreach (IntPair move in possibleMoves) {
-			Board sim = SimulateMove(move.i, move.j);
-			scoredMoves.Add(new AIMinimax {pos = move, score = sim.AIScore()});
-		}
-
 		// The score of the simulated move is calculated for the opponent.
 		// Therefore we want to minimize it.
+		// Randomize equal scores a bit.
+		foreach (IntPair move in possibleMoves) {
+			Board sim = SimulateMove(move.i, move.j);
+			scoredMoves.Add(new AIMinimax {pos = move, score = sim.AIScore(), rand = UnityEngine.Random.Range(0,100)});
+		}
 
-		scoredMoves.Sort((x,y) => x.score.CompareTo(y.score));
-		return scoredMoves[0].pos;
+		// sort moves
+		scoredMoves.Sort((x,y) => (10000*x.score+x.rand).CompareTo(10000*y.score+y.rand));
+
+		// normalize
+		// this is just plain heuristics
+
+		// keep cBest best options
+		// the worst option gets score 1, better gets more
+		// just weigh best cBest options w.r.t. normalized weighths
+		int baseScore = scoredMoves[scoredMoves.Count-1].score + 1;
+		int cBest = Math.Min(3, scoredMoves.Count);
+		scoredMoves = scoredMoves.GetRange(0, cBest);
+		int randPool = 0;
+
+		foreach (AIMinimax move in scoredMoves) {
+			move.score = baseScore - move.score;
+			move.score = move.score*move.score; // square
+			randPool += move.score;
+		}
+
+		int rand = UnityEngine.Random.Range(0,randPool);
+		int m = 0;
+		while (scoredMoves[m].score < rand) {
+			rand -= scoredMoves[m].score;
+			m++;
+		}
+
+		// TODO
+		string dbg = "";
+		foreach (AIMinimax move in scoredMoves)
+			dbg += " " + move.score;
+		Debug.Log("Normalized AIScores: " + dbg + "    Chosen: " + scoredMoves[m].score);
+
+		return scoredMoves[m].pos;
 
 //		int r = UnityEngine.Random.Range(0, possibleMoves.Count);
 //		return new IntPair(possibleMoves[r].i, possibleMoves[r].j);
