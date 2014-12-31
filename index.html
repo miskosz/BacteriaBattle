@@ -10,25 +10,49 @@
 			background-color: white;
 			background-image: url("splash_menu_bg.jpg");
 			background-position: center;
-			color: black;
+			color: white;
 			text-align: center;
+		}
+		h2 {
+			font-size: 28pt;
 		}
 		a {
 			text-decoration: none;
-			font-size: 32pt;
 		}
 		a:link, a:visited {
-			color: white;
+			color: inherit;
 		}
 		a:active, a:hover {
 			color: orange;
+		}
+		#old {
+			color: #999;
+			margin-top: 70px;
+		}
+		#now {
+			color: #f84;
+			transform: translate(150px, 100px) rotate(20deg);
+			font-size: 28pt;
+			font-weight: bold;
+			text-shadow: 0px 0px 100px white;
 		}
 		-->
 		</style>
 	</head>
 	<body>
-		<h1><img src="splash_bb_logo.png" alt="Bacteria Battle"></h1>
+		<div id="now">Now with smarter AI!</div>
+		<img src="splash_bb_logo.png" alt="Bacteria Battle">
+
 		<h2><a href="BacteriaWeb.html">Web Play</a></h2>
 		<h2><a href="BacteriaAndroid.apk">Android APK</a></h2>
+
+
+		<div id="old">
+			Presented version:&nbsp;
+			<a href="BacteriaWeb_2014_12_19.html">Web Play</a>
+			&nbsp;|&nbsp;
+			<a href="BacteriaAndroid_2014_12_19.apk">Android APK</a>
+		</div>
+
 	</body>
 </html>
