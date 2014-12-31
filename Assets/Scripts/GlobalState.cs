@@ -16,7 +16,7 @@ static class GlobalState {
 	}
 
 	// 0: 2-player, 1: AI
-	public static int gameMode = 0;
+	public static int gameMode = 1; // TODO
 
 	// 3 boards
 	public static int board = 0;

@@ -188,6 +188,9 @@ public class Board {
 		});
 		
 		scoreCount = tempScore;
+
+		// TODO
+		Debug.Log("AI score: " + AIScore());
 	}
 
 	// Let us say that an area of empty is WEAKLY CONNECTED if cells are
@@ -305,15 +308,100 @@ public class Board {
 	/// AI
 	////////////////////////////////////////////////////////////////////////////
 
+	public struct AIScoreBFS {
+		public IntPair pos;
+		public BoardCellState player;
+		public int dist;
+	}
+
+	public struct AIMinimax {
+		public IntPair pos;
+		public int score;
+	}
+
+	public int AIScore() {
+		// +4 for my bacteria
+		// +2 for closer field
+		// +1 for equally far if my turn
+
+		// bfs for closer fields
+		Queue<AIScoreBFS> bfs = new Queue<AIScoreBFS>();
+		AIScoreBFS[,] closer = new AIScoreBFS[board.GetLength(0),board.GetLength(1)];
+
+		ForEachBoardCell((int i, int j) => {
+			// init with out of board
+			// pos field is irrelevant
+			closer[i,j] = new AIScoreBFS {pos = new IntPair(i,j), player = BoardCellState.OutOfBoard, dist = 9999};
+
+			// init bfs
+			if (board[i,j] != BoardCellState.Empty)
+				bfs.Enqueue(new AIScoreBFS {pos = new IntPair(i,j), player = board[i,j], dist = 0});
+		});
+
+		// breadth first search
+		while (bfs.Count != 0) {
+			AIScoreBFS next = bfs.Dequeue();
+			int i = next.pos.i, j = next.pos.j;
+
+			if (next.dist <= closer[i,j].dist) {
+				if (next.dist == closer[i,j].dist) {
+					if (next.player == closer[i,j].player || closer[i,j].player == BoardCellState.Empty)
+						continue;
+					closer[i,j].player = BoardCellState.Empty;
+				}
+				else {
+					closer[i,j] = next;
+				}
+
+				ForEachCellNeighbour(i, j, (int ii, int jj) => {
+					bfs.Enqueue(new AIScoreBFS {pos = new IntPair(ii,jj), player = next.player, dist = next.dist+1});
+				});
+			}
+		}
+
+		// BFS is done
+		int[] score = {0,0};
+		for (int p = 0; p < 2; p++)
+			score[p] = scoreCount[p] * 2;
+
+		ForEachBoardCell((int i, int j) => {
+			if (closer[i,j].player == BoardCellState.Empty)
+				score[(int)playerOnTurn] += 1;
+			else
+				score[(int)closer[i,j].player] += 2;
+		});
+
+		Debug.Log("AIS: " + score[0] + " : " + score[1]);
+		return score[(int)playerOnTurn] - score[(int)playerOnTurn.Opponent()];
+	}
+
 	public IntPair GetAIMove() {
 
+		// strategy 1: try all moves and choose the one with best AIscore
+
 		List<IntPair> possibleMoves = GetPossibleMoves();
-		
+
+		// self-explanatory
 		if (possibleMoves.Count == 0)
 			throw new Exception("No moves for AI.");
+		else if (possibleMoves.Count == 1)
+			return possibleMoves[0];
 
-		int r = UnityEngine.Random.Range(0, possibleMoves.Count);
-		return new IntPair(possibleMoves[r].i, possibleMoves[r].j);
+		List<AIMinimax> scoredMoves = new List<AIMinimax>();
+
+		foreach (IntPair move in possibleMoves) {
+			Board sim = SimulateMove(move.i, move.j);
+			scoredMoves.Add(new AIMinimax {pos = move, score = sim.AIScore()});
+		}
+
+		// The score of the simulated move is calculated for the opponent.
+		// Therefore we want to minimize it.
+
+		scoredMoves.Sort((x,y) => x.score.CompareTo(y.score));
+		return scoredMoves[0].pos;
+
+//		int r = UnityEngine.Random.Range(0, possibleMoves.Count);
+//		return new IntPair(possibleMoves[r].i, possibleMoves[r].j);
 	}
 
 }
