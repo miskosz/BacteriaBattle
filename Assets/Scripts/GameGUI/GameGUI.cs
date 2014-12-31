@@ -36,11 +36,11 @@ public class GameGUI : MonoBehaviour {
 		myStyle.fontSize = (int)boxSize.y;
 
 		GUI.Label(new Rect(boxOrigin.x, boxOrigin.y, boxSize.x, boxSize.y),
-		          boardBuilder.getScore(BoardCellState.Player2).ToString(), myStyle);
+		          boardBuilder.GetScore(BoardCellState.Player2).ToString(), myStyle);
 
 		GUIUtility.RotateAroundPivot(-180, new Vector2(0,0));
 		GUI.Label(new Rect(boxOrigin.x-Screen.width, boxOrigin.y-Screen.height, boxSize.x, boxSize.y),
-		          boardBuilder.getScore(BoardCellState.Player1).ToString(), myStyle);
+		          boardBuilder.GetScore(BoardCellState.Player1).ToString(), myStyle);
 
 	}
 

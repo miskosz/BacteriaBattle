@@ -21,10 +21,10 @@ public class PauseMenu : MonoBehaviour {
 			b.enabled=renderer.enabled;
 
 		if (!renderer.enabled) {
-			boardBuilder.enableInput();
+			boardBuilder.EnableInput();
 		}
 		else {
-			boardBuilder.disableInput();
+			boardBuilder.DisableInput();
 		}
 	}
 }

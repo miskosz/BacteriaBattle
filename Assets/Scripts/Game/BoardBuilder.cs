@@ -10,8 +10,7 @@ public class BoardBuilder : MonoBehaviour {
 	public PauseMenu pauseMenu;
 	public WinnerLoser winnerLoser;
 
-	int[] scoreCount = {0, 0};
-	bool inputEnabled = false;
+	public bool inputEnabled = false;
 	bool playerVsAI;
 
 	// initial board setup
@@ -106,19 +105,31 @@ public class BoardBuilder : MonoBehaviour {
 		StartCoroutine(nextTurn());
 	}
 
+	public IEnumerator playerSelected(int i, int j) {
+		
+		// Assert: The move is valid.
+
+		DisableInput();
+		HighlightOff();
+		
+		// NOTE: playerOnTurn is switched by this!
+		List<Action> actions = board.MakeMove(i,j);
+
+		yield return StartCoroutine(AnimateActions(actions));
+		yield return StartCoroutine(nextTurn());
+	}
+
 	IEnumerator nextTurn() {
 
 		// set highlighted places
 		bool hasMove = HighlightOn();
-
-		updateScore();
 
 		// detect game end
 		if (!hasMove) {
 			Debug.Log("GAME OVER");
 
 			// draw winner and loser
-			if (scoreCount[0] < scoreCount[1])
+			if (board.scoreCount[0] < board.scoreCount[1])
 				winnerLoser.spin();
 			winnerLoser.setVisible();
 			yield return new WaitForSeconds(0.5f);
@@ -126,28 +137,23 @@ public class BoardBuilder : MonoBehaviour {
 			// show pause menu
 			pauseMenu.Toggle();
 		}
-
-		/*if (playerVsAI && playerOnTurn == 0) {
-			//disableInput(); TODO!!!!!
-			StartCoroutine(MakeAIMove());
-		}
 		else {
-			enableInput();
-		}*/
+			if (IsAITurn())
+				StartCoroutine(MakeAIMove());
+			else
+				EnableInput();
+		}
 
 		yield break;
 	}
 
-	// set highlighted cells
-	// returns if player has move
+	// Set highlighted cells.
+	// Returns true if player has a move.
 	bool HighlightOn() {
 
 		HighlightOff();
 
 		List<IntPair> moves = board.GetPossibleMoves();
-
-		Debug.Log("highlighting " + moves.Count + " cells");
-
 		foreach (IntPair cell in moves)
 			boardCells[cell.i,cell.j].setHighlighted(true, board.playerOnTurn); 
 
@@ -156,32 +162,8 @@ public class BoardBuilder : MonoBehaviour {
 
 	void HighlightOff() {
 		board.ForEachBoardCell((int i, int j) => {
-			if (boardCells[i,j].getHighlighted()) {
-				boardCells[i,j].setHighlighted(false); 
-			}
+			boardCells[i,j].setHighlighted(false); 
 		});
-	}
-	
-	public IEnumerator playerSelected(int i, int j) {
-		
-		//Debug.Log ("Player selected " + i + " " + j);
-		
-		// only moves to highlighted empty cells are valid
-		if (inputEnabled && boardCells[i,j].getHighlighted() && boardCells[i,j].isEmpty()) {
-		
-			//Debug.Log ("It is a valid move.");
-
-			//disableInput();
-			HighlightOff();
-
-			// TODO: playerOnTurn is switched by this!
-			List<Action> actions = board.MakeMove(i,j);
-			yield return StartCoroutine(AnimateActions(actions));
-
-			yield return StartCoroutine(nextTurn());
-		}
-
-		yield break;
 	}
 
 	IEnumerator AnimateActions(List<Action> actions) {
@@ -193,7 +175,7 @@ public class BoardBuilder : MonoBehaviour {
 			if (action.type == ActionType.Split) {
 				boardCells[action.splitCell.i,action.splitCell.j].Split(boardCells[action.cell.i,action.cell.j]);
 				yield return StartCoroutine(GlobalAnimationTimer.WaitForAnimationEnd());
-				boardCells[action.cell.i,action.cell.j].Appear(board.playerOnTurn.Opponent());
+				boardCells[action.cell.i,action.cell.j].Appear(board.playerOnTurn.Opponent()); // playerOnTurn already switched
 			}
 		}
 		
@@ -208,59 +190,32 @@ public class BoardBuilder : MonoBehaviour {
 		// spawn
 		foreach (Action action in actions) {
 			if (action.type == ActionType.Spawn) {
-				boardCells[action.cell.i,action.cell.j].Spawn(board.playerOnTurn.Opponent());
+				boardCells[action.cell.i,action.cell.j].Spawn(board.playerOnTurn.Opponent()); // playerOnTurn already switched
 			}
 		}
 		yield return StartCoroutine(GlobalAnimationTimer.WaitForAnimationEnd());	
 	}
-	
-	// score counting
-	public void updateScore() {
-		int[] tempScore = {0, 0};
 
-		board.ForEachBoardCell((int i, int j) => {
-			if (!boardCells[i,j].isEmpty())
-				tempScore[(int)boardCells[i,j].getState()]++;
-		});
-		
-		scoreCount = tempScore;
+	bool IsAITurn() {
+		return playerVsAI && board.playerOnTurn == BoardCellState.Player1;
 	}
 
-	/*IEnumerator MakeAIMove() {
-		Debug.Log("MakeAIMove");
-
-		disableInput(); // TODO
+	IEnumerator MakeAIMove() {
 		yield return new WaitForSeconds(0.5f);
-
-		List<IntPair> possibleMoves = new List<IntPair>();
-
-		forEachBoardCell((int i, int j) => {
-			if (boardCells[i,j].getHighlighted())
-				possibleMoves.Add(new IntPair(i,j));
-		});
-
-		if (possibleMoves.Count > 0) {
-			int r = Random.Range(0, possibleMoves.Count);
-			enableInput(); // TODO
-			StartCoroutine(playerSelected(possibleMoves[r].i, possibleMoves[r].j));
-
-			Debug.Log("MakeAIMove " + possibleMoves[r].i + " " + possibleMoves[r].j);
-		}
-
-		yield break;
-	}*/
-
-	public int getScore(BoardCellState player) {
-		return scoreCount[(int)player];
+		IntPair move = board.GetAIMove();
+		StartCoroutine(playerSelected(move.i, move.j));
 	}
 
-	public void disableInput() {
+	public int GetScore(BoardCellState player) {
+		return board.scoreCount[(int)player];
+	}
+
+	public void DisableInput() {
 		inputEnabled = false;
 	}
 
-	public void enableInput() {
+	public void EnableInput() {
 		inputEnabled = true;
 	}
-	
 
 }

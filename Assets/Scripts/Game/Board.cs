@@ -44,6 +44,10 @@ public class Board {
 	// whose turn is it
 	public BoardCellState playerOnTurn;
 
+	// scores
+	public int[] scoreCount = {0, 0};
+
+
 	// constructors
 
 	// copy	constructor
@@ -51,6 +55,7 @@ public class Board {
 		playerOnTurn = b.playerOnTurn;
 		board = new BoardCellState[b.board.GetLength(0),b.board.GetLength(1)];
 		Array.Copy(b.board, board, board.Length);
+		updateScore();
 	}
 
 	public Board(int[,] boardSetup, BoardCellState playerOnTurn = BoardCellState.Player1) {
@@ -64,12 +69,14 @@ public class Board {
 				board[i,j] = (BoardCellState) boardSetup[i,j];
 			}
 		}
+
+		updateScore();
 	}
 
 
-	///
+	////////////////////////////////////////////////////////////////////////////
 	/// Game Logic
-	///
+	////////////////////////////////////////////////////////////////////////////
 
 	// Return a board where the player on turn moved to (i,j).
 	// Return null if the move is not to an empty cell.
@@ -101,7 +108,7 @@ public class Board {
 
 	public List<Action> MakeMove(int i, int j) {
 
-		Debug.Log("Move to " + i + " " + j);
+		//Debug.Log("Move to " + i + " " + j);
 
 		// simulate the move
 		Board nextBoard = SimulateMove(i,j);
@@ -143,6 +150,9 @@ public class Board {
 			board[ii,jj] = nextBoard.board[ii,jj];
 		});
 
+		// update score
+		updateScore();
+
 		return actions;
 	}
 
@@ -167,7 +177,19 @@ public class Board {
 		
 		return moves;
 	}
-	
+
+	// Score counting
+	public void updateScore() {
+		int[] tempScore = {0, 0};
+		
+		ForEachBoardCell((int i, int j) => {
+			if (board[i,j] != BoardCellState.Empty)
+				tempScore[(int)board[i,j]]++;
+		});
+		
+		scoreCount = tempScore;
+	}
+
 	// Let us say that an area of empty is WEAKLY CONNECTED if cells are
 	// separated by at most one bacteria. A weakly connected area should
 	// be filled if all of its boundary bacteria are of the same type.
@@ -231,10 +253,10 @@ public class Board {
 		});
 	}
 
-	///
+	////////////////////////////////////////////////////////////////////////////
 	/// Board utilities
-	///
-	
+	////////////////////////////////////////////////////////////////////////////
+
 	// neighbourhood vectors di, dj
 	// 1 2
 	// 0 . 3
@@ -277,6 +299,21 @@ public class Board {
 				method(ii, jj);
 			}
 		}
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/// AI
+	////////////////////////////////////////////////////////////////////////////
+
+	public IntPair GetAIMove() {
+
+		List<IntPair> possibleMoves = GetPossibleMoves();
+		
+		if (possibleMoves.Count == 0)
+			throw new Exception("No moves for AI.");
+
+		int r = UnityEngine.Random.Range(0, possibleMoves.Count);
+		return new IntPair(possibleMoves[r].i, possibleMoves[r].j);
 	}
 
 }

@@ -49,13 +49,15 @@ public class BoardCell : MonoBehaviour {
 
     void OnMouseDown() {
         // notify BoardBuilder
-		StartCoroutine(boardBuilder.playerSelected(iPos, jPos));
+		// only highlighted cells are clickable
+		if (cellHighlight.getHighlighted() && boardBuilder.inputEnabled) {
+			StartCoroutine(boardBuilder.playerSelected(iPos, jPos));
+		}
     }
 
 	// interface for highlighting
-	public bool getHighlighted() { return cellHighlight.getHighlighted(); }
+	//public bool getHighlighted() { return cellHighlight.getHighlighted(); }
 	public void setHighlighted(bool highlighted, BoardCellState _state = BoardCellState.Empty) {
-		Debug.Log ("Set highlighted " + iPos + " " + jPos);
 		cellHighlight.setHighlighted(highlighted, _state);
 	}
 
