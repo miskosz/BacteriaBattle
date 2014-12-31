@@ -6,10 +6,7 @@ public class BoardBuilder : MonoBehaviour {
 	
 	public GameObject boardCellPrefab;
 	public float cellDistance = 1;
-
-	public AudioClip divisionAudio;
-	public AudioClip gameOverAudio;
-
+	
 	public PauseMenu pauseMenu;
 	public WinnerLoser winnerLoser;
 
@@ -106,35 +103,19 @@ public class BoardBuilder : MonoBehaviour {
 		});
 
 		// initialize highlighted cells & stuff
-		//StartCoroutine(nextTurn());
+		StartCoroutine(nextTurn());
 	}
 
-	/*IEnumerator nextTurn() {
-		// switch player
-		playerOnTurn = 1 - playerOnTurn;
-
-		// fill closed areas
-		fillClosedAreas();
-		yield return StartCoroutine(GlobalAnimationTimer.WaitForAnimationEnd());
+	IEnumerator nextTurn() {
 
 		// set highlighted places
-		bool hasMove = HighlightOn(playerState[playerOnTurn]);
+		bool hasMove = HighlightOn();
 
 		updateScore();
 
 		// detect game end
 		if (!hasMove) {
 			Debug.Log("GAME OVER");
-
-			// all remaining cells are opponent's
-			forEachBoardCell((int i, int j) => {
-				if (board[i,j].isEmpty()) {
-						board[i,j].Spawn(playerState[1-playerOnTurn]);
-				}
-			});
-
-			// play audio
-			MusicManagerSingleton.Instance.playSound(gameOverAudio, audio);
 
 			// draw winner and loser
 			if (scoreCount[0] < scoreCount[1])
@@ -146,40 +127,32 @@ public class BoardBuilder : MonoBehaviour {
 			pauseMenu.Toggle();
 		}
 
-		if (playerVsAI && playerOnTurn == 0) {
+		/*if (playerVsAI && playerOnTurn == 0) {
 			//disableInput(); TODO!!!!!
 			StartCoroutine(MakeAIMove());
 		}
 		else {
 			enableInput();
-		}
+		}*/
 
 		yield break;
 	}
 
 	// set highlighted cells
-	// returns if layer has move
-	bool HighlightOn(BoardCellState player) {
-		bool hasMove = false;
-		
-		forEachBoardCell((int i, int j) => {
-			
-			bool highlight = false;
-			if (boardCells[i,j].isEmpty()) {
-				// iterate over cell neighbours
-				forEachCellNeighbour(i, j, (int ii, int jj) => {
-					if (boardCells[ii,jj].getState() == player) {
-						highlight = true;
-						hasMove = true;
-					}
-				});
-			}
-			boardCells[i,j].setHighlighted(highlight, player); 
-			
-		});
+	// returns if player has move
+	bool HighlightOn() {
 
-		return hasMove;
-	}*/
+		HighlightOff();
+
+		List<IntPair> moves = board.GetPossibleMoves();
+
+		Debug.Log("highlighting " + moves.Count + " cells");
+
+		foreach (IntPair cell in moves)
+			boardCells[cell.i,cell.j].setHighlighted(true, board.playerOnTurn); 
+
+		return (moves.Count != 0);
+	}
 
 	void HighlightOff() {
 		board.ForEachBoardCell((int i, int j) => {
@@ -194,48 +167,53 @@ public class BoardBuilder : MonoBehaviour {
 		//Debug.Log ("Player selected " + i + " " + j);
 		
 		// only moves to highlighted empty cells are valid
-		if (inputEnabled /*&& boardCells[i,j].getHighlighted()*/ && boardCells[i,j].isEmpty()) {
+		if (inputEnabled && boardCells[i,j].getHighlighted() && boardCells[i,j].isEmpty()) {
 		
 			//Debug.Log ("It is a valid move.");
 
 			//disableInput();
-			//HighlightOff();
+			HighlightOff();
 
 			// TODO: playerOnTurn is switched by this!
 			List<Action> actions = board.MakeMove(i,j);
+			yield return StartCoroutine(AnimateActions(actions));
 
-			// Process the actions by type, in the order split - convert - spawn.
-			// Doing foreach 3x does not kill us.
-
-			// split
-			foreach (Action action in actions) {
-				if (action.type == ActionType.Split) {
-					boardCells[action.splitCell.i,action.splitCell.j].Split(boardCells[action.cell.i,action.cell.j]);
-					yield return StartCoroutine(GlobalAnimationTimer.WaitForAnimationEnd());
-					boardCells[action.cell.i,action.cell.j].Appear(board.playerOnTurn.Opponent());
-				}
-			}
-
-			// convert
-			foreach (Action action in actions) {
-				if (action.type == ActionType.Convert) {
-					boardCells[action.cell.i,action.cell.j].Convert();
-				}
-			}
-			yield return StartCoroutine(GlobalAnimationTimer.WaitForAnimationEnd());
-
-			// spawn
-			foreach (Action action in actions) {
-				if (action.type == ActionType.Spawn) {
-					boardCells[action.cell.i,action.cell.j].Spawn(board.playerOnTurn.Opponent());
-				}
-			}
-			yield return StartCoroutine(GlobalAnimationTimer.WaitForAnimationEnd());
+			yield return StartCoroutine(nextTurn());
 		}
 
 		yield break;
 	}
 
+	IEnumerator AnimateActions(List<Action> actions) {
+		// Process the actions by type, in the order split - convert - spawn.
+		// Doing foreach 3x does not kill us.
+		
+		// split
+		foreach (Action action in actions) {
+			if (action.type == ActionType.Split) {
+				boardCells[action.splitCell.i,action.splitCell.j].Split(boardCells[action.cell.i,action.cell.j]);
+				yield return StartCoroutine(GlobalAnimationTimer.WaitForAnimationEnd());
+				boardCells[action.cell.i,action.cell.j].Appear(board.playerOnTurn.Opponent());
+			}
+		}
+		
+		// convert
+		foreach (Action action in actions) {
+			if (action.type == ActionType.Convert) {
+				boardCells[action.cell.i,action.cell.j].Convert();
+			}
+		}
+		yield return StartCoroutine(GlobalAnimationTimer.WaitForAnimationEnd());
+		
+		// spawn
+		foreach (Action action in actions) {
+			if (action.type == ActionType.Spawn) {
+				boardCells[action.cell.i,action.cell.j].Spawn(board.playerOnTurn.Opponent());
+			}
+		}
+		yield return StartCoroutine(GlobalAnimationTimer.WaitForAnimationEnd());	
+	}
+	
 	// score counting
 	public void updateScore() {
 		int[] tempScore = {0, 0};

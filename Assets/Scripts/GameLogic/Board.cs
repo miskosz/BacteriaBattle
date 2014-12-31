@@ -111,6 +111,9 @@ public class Board {
 
 		ForEachBoardCell((int ii, int jj) => {
 			if (board[ii,jj] != nextBoard.board[ii,jj]) {
+
+				IntPair cell = new IntPair(ii, jj);
+
 				if (i == ii && j == jj) {
 					// it is a split, find split cell
 					IntPair splitCell = new IntPair(-1,-1);
@@ -120,23 +123,16 @@ public class Board {
 						}
 					});
 
-					if (splitCell.i == -1) {
-						// spawn instead
-						actions.Add(new Action(ActionType.Spawn, new IntPair(ii, jj)));
-					}
-					else {
-						actions.Add(new Action(ActionType.Split, new IntPair(ii, jj), splitCell));
-					}
-
+					// if no cell found spawn instead
+					if (splitCell.i == -1)
+						actions.Add(new Action(ActionType.Spawn, cell));
+					else
+						actions.Add(new Action(ActionType.Split, cell, splitCell)); // split
 				}
-				else if (board[ii,jj] == BoardCellState.Empty) {
-					// spawn
-					actions.Add(new Action(ActionType.Spawn, new IntPair(ii, jj)));
-				}
-				else {
-					// convert
-					actions.Add(new Action(ActionType.Convert, new IntPair(ii, jj)));
-				}
+				else if (board[ii,jj] == BoardCellState.Empty)
+					actions.Add(new Action(ActionType.Spawn, cell)); // spawn
+				else
+					actions.Add(new Action(ActionType.Convert, cell)); // convert
 			}
 		});
 
@@ -149,7 +145,28 @@ public class Board {
 
 		return actions;
 	}
-	
+
+	// set highlighted cells
+	// returns if layer has move
+	public List<IntPair> GetPossibleMoves() {
+
+		List<IntPair> moves = new List<IntPair>();
+
+		ForEachBoardCell((int i, int j) => {
+			
+			if (board[i,j] == BoardCellState.Empty) {
+				// iterate over cell neighbours
+				ForEachCellNeighbour(i, j, (int ii, int jj) => {
+					if (board[ii,jj] == playerOnTurn) {
+						moves.Add(new IntPair(i, j));
+					}
+				});
+			}
+
+		});
+		
+		return moves;
+	}
 	
 	// Let us say that an area of empty is WEAKLY CONNECTED if cells are
 	// separated by at most one bacteria. A weakly connected area should

@@ -28,6 +28,7 @@ public class BoardCell : MonoBehaviour {
 
 	public AudioClip popAudio;
 	public AudioClip spawnAudio;
+	public AudioClip divisionAudio;
 
 	
 	// called from BoardCellController when creating the board
@@ -54,6 +55,7 @@ public class BoardCell : MonoBehaviour {
 	// interface for highlighting
 	public bool getHighlighted() { return cellHighlight.getHighlighted(); }
 	public void setHighlighted(bool highlighted, BoardCellState _state = BoardCellState.Empty) {
+		Debug.Log ("Set highlighted " + iPos + " " + jPos);
 		cellHighlight.setHighlighted(highlighted, _state);
 	}
 
@@ -119,6 +121,9 @@ public class BoardCell : MonoBehaviour {
 
 		PlayAnimation("Split");
 		GlobalAnimationTimer.AnimationTriggered(splitAnimationClip);
+
+		// play audio
+		MusicManagerSingleton.Instance.playSound(divisionAudio, audio);
 	}
 
 	// unity triggers are weird

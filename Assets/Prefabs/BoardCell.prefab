@@ -223,6 +223,7 @@ MonoBehaviour:
   spawnAnimationClip: {fileID: 7400000, guid: 824d5bac17b0a4fc5bcc12e7c8e482cb, type: 2}
   popAudio: {fileID: 8300000, guid: 9b62dca1f5ffb4f0fbec080f92ebc996, type: 3}
   spawnAudio: {fileID: 8300000, guid: 9b62dca1f5ffb4f0fbec080f92ebc996, type: 3}
+  divisionAudio: {fileID: 8300000, guid: 4f371ab7eac5a444898ca40a6fe09ca5, type: 3}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -3,6 +3,8 @@ using System.Collections;
 
 public class WinnerLoser : MonoBehaviour {
 
+	public AudioClip gameOverAudio;
+
 	Vector3 winnerPosition;
 	Vector3 loserPosition;
 
@@ -31,6 +33,9 @@ public class WinnerLoser : MonoBehaviour {
 	}
 
 	public void setVisible() {
+
+		// play audio
+		MusicManagerSingleton.Instance.playSound(gameOverAudio, audio);
 
 		foreach (Renderer r in gameObject.GetComponentsInChildren<Renderer>())
 			r.enabled = true;
