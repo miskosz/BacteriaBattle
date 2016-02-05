@@ -12,18 +12,22 @@
 			background-position: center;
 			color: white;
 			text-align: center;
+			margin-bottom: 100px;
 		}
 		h2 {
+			margin-top: 100px;
+		}
+		h3 {
 			font-size: 28pt;
 		}
 		a {
-			text-decoration: none;
+			/*text-decoration: none;*/
 		}
 		a:link, a:visited {
 			color: inherit;
 		}
 		a:active, a:hover {
-			color: orange;
+			color: #f84;
 		}
 		#old {
 			color: #999;
@@ -36,6 +40,16 @@
 			font-weight: bold;
 			text-shadow: 0px 0px 100px white;
 		}
+		img {
+			margin-bottom: -50px;
+		}
+		li {
+			list-style: none;
+		}
+		li b {
+			color: #f84;
+			font-weight: normal;
+		}
 		-->
 		</style>
 	</head>
@@ -43,16 +57,24 @@
 		<div id="now">Now with smarter AI!</div>
 		<img src="splash_bb_logo.png" alt="Bacteria Battle">
 
-		<h2><a href="BacteriaWeb.html">Web Play</a></h2>
-		<h2><a href="BacteriaAndroid.apk">Android APK</a></h2>
+		<h3><a href="BacteriaWeb.html">Play in browser</a></h3>
+		<h3><a href="BacteriaAndroid.apk">Install on Android</a></h3>
 
 
-		<div id="old">
+		<!--div id="old">
 			Presented version:&nbsp;
 			<a href="BacteriaWeb_2014_12_19.html">Web Play</a>
 			&nbsp;|&nbsp;
 			<a href="BacteriaAndroid_2014_12_19.apk">Android APK</a>
-		</div>
+		</div-->
+
+		<h2>How to play</h2>
+		<ul>
+			<li><b>Two players</b> play against each other. They alternate in turns.</li>
+			<li>In a turn, you place <b>new bacterium</b> to any place <b>next to</b> your other bacteria.</li>
+			<li>All opponent's bacteria next to the newly placed one <b>convert to yours</b>.</li>
+			<li>Player with <b>more bacteria</b> in the end wins!</li>
+		</ul>
 
 	</body>
 </html>
